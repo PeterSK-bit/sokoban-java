@@ -1,4 +1,14 @@
 package sokoban.model.objects;
 
-public class Player {
+import sokoban.model.position.Position;
+
+public class Player extends MoveableObject {
+    public Player(Position position) {
+        super(position);
+    }
+
+    @Override
+    public boolean isBlocking() {
+        return true;
+    }
 }
