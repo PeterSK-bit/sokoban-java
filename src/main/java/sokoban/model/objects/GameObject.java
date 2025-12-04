@@ -2,7 +2,7 @@ package sokoban.model.objects;
 
 import sokoban.model.position.Position;
 
-public class GameObject {
+public abstract class GameObject {
     private Position position;
 
     public GameObject(Position position) {
@@ -16,6 +16,8 @@ public class GameObject {
     public Position getPosition() {
         return this.position;
     }
+
+    public abstract boolean isBlocking();
 
     @Override
     public boolean equals(Object object) {
