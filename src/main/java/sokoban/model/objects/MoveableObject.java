@@ -1,4 +1,11 @@
 package sokoban.model.objects;
 
-public class MoveableObject {
+import sokoban.model.position.Position;
+
+public abstract class MoveableObject extends GameObject {
+    public MoveableObject(Position position) {
+        super(position);
+    }
+
+    public abstract boolean isBlocking();
 }
