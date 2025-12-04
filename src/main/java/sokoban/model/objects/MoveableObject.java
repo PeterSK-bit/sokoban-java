@@ -7,5 +7,7 @@ public abstract class MoveableObject extends GameObject {
         super(position);
     }
 
-    public abstract boolean isBlocking();
+    public final boolean isMoveable() {
+        return true;
+    }
 }

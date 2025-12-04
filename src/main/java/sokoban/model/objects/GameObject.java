@@ -18,6 +18,8 @@ public abstract class GameObject {
     }
 
     public abstract boolean isBlocking();
+    public abstract boolean isPushable();
+    public abstract boolean isMoveable();
 
     @Override
     public boolean equals(Object object) {
