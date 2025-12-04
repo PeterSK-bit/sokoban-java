@@ -1,4 +1,11 @@
 package sokoban.model.objects;
 
-public class StaticObject {
+import sokoban.model.position.Position;
+
+public abstract class StaticObject extends GameObject {
+    public StaticObject(Position position) {
+        super(position);
+    }
+
+    public abstract boolean isBlocking();
 }
