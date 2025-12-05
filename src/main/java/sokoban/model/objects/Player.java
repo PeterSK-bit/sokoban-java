@@ -8,6 +8,11 @@ public class Player extends MoveableObject {
     }
 
     @Override
+    public MoveableObject copy() {
+        return new Player(this.getPosition());
+    }
+
+    @Override
     public boolean isBlocking() {
         return true;
     }
