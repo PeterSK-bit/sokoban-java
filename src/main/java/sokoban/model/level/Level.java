@@ -12,6 +12,26 @@ public class Level {
     private final StaticObject[][] staticObjects;
 
     public Level(int width, int height, MoveableObject[][] initialMoveableObjects, StaticObject[][] staticObjects) {
+        if (initialMoveableObjects.length != height) {
+            throw new IllegalArgumentException("Miss match of height and height of initialMoveableObjects array");
+        }
+
+        for (int i = 0; i < height; i++) {
+            if (initialMoveableObjects[i].length != width) {
+                throw new IllegalArgumentException("Miss match of width and width of initialMoveableObjects array");
+            }
+        }
+
+        if (staticObjects.length != height) {
+            throw new IllegalArgumentException("Miss match of height and height of staticObjects array");
+        }
+
+        for (int i = 0; i < height; i++) {
+            if (staticObjects[i].length != width) {
+                throw new IllegalArgumentException("Miss match of width and width of staticObjects array");
+            }
+        }
+
         this.width = width;
         this.height = height;
         this.initialMoveableObjects = initialMoveableObjects;
@@ -37,12 +57,20 @@ public class Level {
     }
 
     public StaticObject getStaticObjectAt(Position position) {
+        if (position == null) {
+            throw new IllegalArgumentException("Position can not be null");
+        }
+
         this.ensureWithinBounds(position);
 
         return this.staticObjects[position.getY()][position.getX()];
     }
 
     public MoveableObject getInitialMoveableAt(Position position) {
+        if (position == null) {
+            throw new IllegalArgumentException("Position can not be null");
+        }
+
         this.ensureWithinBounds(position);
 
         return this.initialMoveableObjects[position.getY()][position.getX()];
@@ -69,6 +97,10 @@ public class Level {
     }
 
     public GameObject getObjectAt(Position position) {
+        if (position == null) {
+            throw new IllegalArgumentException("Position can not be null");
+        }
+
         this.ensureWithinBounds(position);
 
         int x = position.getX();
@@ -80,6 +112,4 @@ public class Level {
 
         return this.staticObjects[y][x];
     }
-
-
 }
