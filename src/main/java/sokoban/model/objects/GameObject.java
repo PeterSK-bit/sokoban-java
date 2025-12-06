@@ -17,6 +17,14 @@ public abstract class GameObject {
         return this.position;
     }
 
+    public void setPosition(Position position) {
+        if (position == null) {
+            throw new IllegalArgumentException("Position can not be null");
+        }
+
+        this.position = position;
+    }
+
     public abstract boolean isBlocking();
     public abstract boolean isPushable();
     public abstract boolean isMoveable();

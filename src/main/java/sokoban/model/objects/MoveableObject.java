@@ -7,6 +7,8 @@ public abstract class MoveableObject extends GameObject {
         super(position);
     }
 
+    public abstract MoveableObject copy();
+
     public final boolean isMoveable() {
         return true;
     }

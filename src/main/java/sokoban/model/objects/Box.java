@@ -8,6 +8,11 @@ public class Box extends MoveableObject {
     }
 
     @Override
+    public MoveableObject copy() {
+        return new Box(this.getPosition());
+    }
+
+    @Override
     public boolean isBlocking() {
         return true;
     }
