@@ -79,8 +79,12 @@ public class Level {
     public MoveableObject[][] getInitialMoveableObjects() {
         MoveableObject[][] copy = new MoveableObject[this.initialMoveableObjects.length][];
 
-        for (int i = 0; i < this.initialMoveableObjects.length; i++) {
-            copy[i] = Arrays.copyOf(this.initialMoveableObjects[i], this.initialMoveableObjects[i].length);
+        for (int y = 0; y < this.initialMoveableObjects.length; y++) {
+            copy[y] = new MoveableObject[this.initialMoveableObjects[y].length];
+            for (int x = 0; x < this.initialMoveableObjects[y].length; x++) {
+                MoveableObject obj = this.initialMoveableObjects[y][x];
+                copy[y][x] = (obj == null ? null : obj.copy());
+            }
         }
 
         return copy;
