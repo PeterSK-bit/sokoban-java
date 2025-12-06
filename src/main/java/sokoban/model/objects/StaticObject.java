@@ -14,4 +14,9 @@ public abstract class StaticObject extends GameObject {
     public final boolean isMoveable() {
         return false;
     }
+
+    @Override
+    public void setPosition(Position position) {
+        throw new UnsupportedOperationException("Static object can not be moved");
+    }
 }
