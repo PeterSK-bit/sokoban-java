@@ -2,7 +2,15 @@ package sokoban.movement;
 
 import sokoban.model.enums.Direction;
 import sokoban.model.level.Level;
-import sokoban.model.objects.*;
+
+// because I can not use "import sokoban.model.objects.*;" :)
+import sokoban.model.objects.GameObject;
+import sokoban.model.objects.MoveableObject;
+import sokoban.model.objects.StaticObject;
+import sokoban.model.objects.Goal;
+import sokoban.model.objects.Player;
+import sokoban.model.objects.Box;
+
 import sokoban.model.position.Position;
 
 import java.util.ArrayList;

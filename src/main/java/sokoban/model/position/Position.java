@@ -29,7 +29,7 @@ public class Position {
             return false;
         }
 
-        Position position = (Position) object;
+        Position position = (Position)object;
 
         return (this.x == position.x && this.y == position.y);
     }
@@ -41,6 +41,6 @@ public class Position {
     // Required for correct behavior in hash-based collections (maybe will come handy)
     @Override
     public int hashCode() {
-        return 31 * x + y; // 31 is a standard prime used for good hash distribution
+        return 31 * this.x + this.y; // 31 is a standard prime used for good hash distribution
     }
 }

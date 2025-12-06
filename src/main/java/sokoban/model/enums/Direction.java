@@ -9,13 +9,13 @@ public enum  Direction {
     private final int dx;
     private final int dy;
 
-    private Direction(int dx, int dy) {
+    Direction(int dx, int dy) {
         this.dx = dx;
         this.dy = dy;
     }
 
     public int dx() {
-        return dx;
+        return this.dx;
     }
 
     public int dy() {

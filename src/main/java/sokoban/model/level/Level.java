@@ -1,6 +1,10 @@
 package sokoban.model.level;
 
-import sokoban.model.objects.*;
+// because I can not use "import sokoban.model.objects.*;" :)
+import sokoban.model.objects.GameObject;
+import sokoban.model.objects.MoveableObject;
+import sokoban.model.objects.StaticObject;
+
 import sokoban.model.position.Position;
 
 import java.util.Arrays;
@@ -42,7 +46,7 @@ public class Level {
         int x = position.getX();
         int y = position.getY();
 
-        if (x < 0 || x >= width || y < 0 || y >= height) {
+        if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
             throw new IllegalArgumentException("Position out of array bounds.");
         }
     }
