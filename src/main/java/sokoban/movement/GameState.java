@@ -1,15 +1,17 @@
 package sokoban.movement;
 
 import sokoban.model.level.Level;
-import sokoban.model.objects.Box;
-import sokoban.model.objects.GameObject;
-import sokoban.model.objects.Goal;
-import sokoban.model.objects.MoveableObject;
+import sokoban.model.objects.*;
 import sokoban.model.position.Position;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameState {
     private final Level level;
     private MoveableObject[][] moveableObjects;
+    private final List<Position> goalPositions;
+
 
     public GameState(Level level) {
         if (level == null) {
@@ -18,6 +20,17 @@ public class GameState {
 
         this.level = level;
         this.reset();
+        this.goalPositions = new ArrayList<Position>();
+
+        StaticObject[][] staticObjects = this.level.getStaticObjects();
+
+        for (int y = 0; y < this.level.getHeight(); y++) {
+            for (int x = 0; x < this.level.getWidth(); x++) {
+                if (staticObjects[y][x] instanceof Goal) {
+                    this.goalPositions.add(staticObjects[y][x].getPosition());
+                }
+            }
+        }
     }
 
     public void reset() {
@@ -25,11 +38,9 @@ public class GameState {
     }
 
     public boolean isCompleted() {
-        for (int y = 0; y < this.level.getHeight(); y++) {
-            for (int x = 0; x < this.level.getWidth(); x++){
-                if (this.moveableObjects[y][x] instanceof Box && !(this.level.getStaticObjectAt(new Position(x, y)) instanceof Goal)) {
-                    return false;
-                }
+        for (Position pos : this.goalPositions) {
+            if (!(this.moveableObjects[pos.getY()][pos.getX()] instanceof Box)) {
+                return false;
             }
         }
 
