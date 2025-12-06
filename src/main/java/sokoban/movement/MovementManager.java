@@ -3,7 +3,6 @@ package sokoban.movement;
 import sokoban.model.enums.Direction;
 import sokoban.model.objects.Box;
 import sokoban.model.objects.MoveableObject;
-import sokoban.model.objects.Player;
 import sokoban.model.objects.Wall;
 import sokoban.model.position.Position;
 
@@ -32,7 +31,7 @@ public class MovementManager {
         MoveableObject obj = this.gameState.getMoveableObjectAt(target);
 
         if (obj == null) {
-            return movePlayer(direction);
+            return this.movePlayer(direction);
         }
 
         if (!(obj instanceof Box)) {
@@ -51,7 +50,7 @@ public class MovementManager {
 
         this.gameState.moveObject(target, direction);
 
-        return movePlayer(direction);
+        return this.movePlayer(direction);
     }
 
     private boolean movePlayer(Direction direction) {

@@ -39,9 +39,9 @@ public abstract class GameObject {
             return true;
         }
 
-        GameObject other = (GameObject) object;
+        GameObject other = (GameObject)object;
 
-        return position.equals(other.position);
+        return this.position.equals(other.position);
     }
 
     @Override
