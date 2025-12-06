@@ -1,5 +1,7 @@
 package sokoban.model.position;
 
+import sokoban.model.enums.Direction;
+
 public class Position {
     private final int x;
     private final int y;
@@ -32,8 +34,8 @@ public class Position {
         return (this.x == position.x && this.y == position.y);
     }
 
-    public Position translate(int dx, int dy) {
-        return new Position(this.x + dx, this.y + dy);
+    public Position translate(Direction direction) {
+        return new Position(this.x + direction.dx(), this.y + direction.dy());
     }
 
     // Required for correct behavior in hash-based collections (maybe will come handy)
