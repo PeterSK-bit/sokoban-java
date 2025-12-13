@@ -1,5 +1,6 @@
 package sokoban.ui;
 
+import sokoban.model.enums.GameAction;
 import sokoban.model.position.Position;
 
 public abstract class UIElement {
@@ -63,5 +64,5 @@ public abstract class UIElement {
         this.position = newPosition;
     }
 
-    public abstract void onClick();
+    public abstract GameAction onClick();
 }
