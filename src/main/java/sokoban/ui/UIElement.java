@@ -53,7 +53,14 @@ public abstract class UIElement {
     }
 
     public boolean isClicked(Position mouseClick) {
-        return this.position.equals(mouseClick);
+        int x = mouseClick.getX();
+        int y = mouseClick.getY();
+
+        if (x >= this.position.getX() && y >= this.position.getY()) {
+            return (x - this.width <= this.position.getX() && y - this.height <= this.position.getY());
+        }
+
+        return false;
     }
 
     public void move(Position newPosition) {
