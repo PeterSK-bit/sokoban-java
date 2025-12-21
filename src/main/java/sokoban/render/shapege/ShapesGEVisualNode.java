@@ -1,6 +1,7 @@
-package sokoban.render;
+package sokoban.render.shapege;
 
 import sokoban.model.position.Position;
+import sokoban.render.api.IVisualNode;
 
 public class ShapesGEVisualNode implements IVisualNode {
 

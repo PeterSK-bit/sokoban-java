@@ -1,4 +1,4 @@
-package sokoban.render;
+package sokoban.render.api;
 
 import sokoban.model.position.Position;
 

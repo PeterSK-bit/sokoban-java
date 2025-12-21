@@ -1,4 +1,4 @@
-package sokoban.render;
+package sokoban.render.shapege;
 
 import java.lang.reflect.Method;
 

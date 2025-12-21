@@ -1,4 +1,4 @@
-package sokoban.render;
+package sokoban.render.core;
 
 public class RenderFactory {
 }

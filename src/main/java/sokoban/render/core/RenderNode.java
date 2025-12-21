@@ -1,6 +1,7 @@
-package sokoban.render;
+package sokoban.render.core;
 
 import sokoban.model.position.Position;
+import sokoban.render.api.IVisualNode;
 import sokoban.render.enums.RenderType;
 
 import java.util.List;
