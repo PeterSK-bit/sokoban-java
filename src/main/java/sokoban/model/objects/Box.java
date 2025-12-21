@@ -1,6 +1,7 @@
 package sokoban.model.objects;
 
 import sokoban.model.position.Position;
+import sokoban.render.enums.RenderType;
 
 public class Box extends MoveableObject {
     public Box(Position position) {
@@ -20,5 +21,10 @@ public class Box extends MoveableObject {
     @Override
     public boolean isPushable() {
         return true;
+    }
+
+    @Override
+    public RenderType getRenderType() {
+        return RenderType.BOX;
     }
 }
