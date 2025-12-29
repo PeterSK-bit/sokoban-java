@@ -2,17 +2,21 @@ package sokoban.render.shapege;
 
 import fri.shapesge.Circle;
 import fri.shapesge.Rectangle;
+import fri.shapesge.TextBlock;
 import fri.shapesge.Triangle;
 import sokoban.model.position.Position;
 import sokoban.render.api.IVisualNode;
 import sokoban.render.api.IVisualNodeFactory;
 import sokoban.render.enums.RenderType;
+import sokoban.ui.Button;
+import sokoban.ui.Label;
+import sokoban.ui.UIElement;
 
 import java.util.List;
 
 public class ShapesGEVisualFactory implements IVisualNodeFactory {
     @Override
-    public List<IVisualNode> createVisual(RenderType type, Position position) {
+    public List<IVisualNode> createGameVisual(RenderType type, Position position) {
         return switch (type) {
             case PLAYER -> this.createPlayer(position);
             case BOX -> this.createBox(position);
@@ -108,5 +112,50 @@ public class ShapesGEVisualFactory implements IVisualNodeFactory {
                 new ShapesGEVisualNode(r3),
                 new ShapesGEVisualNode(r4)
         );
+    }
+
+    @Override
+    public List<IVisualNode> createUIElementVisual(UIElement element) {
+        if (element == null) {
+            throw new IllegalArgumentException("UIElement can not by null");
+        }
+
+        Position position = element.getPosition();
+
+        return switch (element.getRenderType()) {
+            case UI_BUTTON -> this.createButton(position, (Button)element);
+            case UI_LABEL -> this.createLabel(position, (Label)element);
+            default -> this.createFallback(position);
+        };
+    }
+
+    private List<IVisualNode> createButton(Position position, Button button) {
+        int x = position.getX();
+        int y = position.getY();
+        String labelText = button.getLabel();
+
+        Rectangle bg = new Rectangle(x, y);
+        bg.changeSize(labelText.length() * 15 + 20, 50);
+        bg.changeColor("white");
+
+        TextBlock textBlock = new TextBlock(labelText, x + 10, y + 10);
+        textBlock.changeColor("black");
+
+        return List.of(new ShapesGEVisualNode(bg), new ShapesGEVisualNode(textBlock));
+    }
+
+    private List<IVisualNode> createLabel(Position position, Label label) {
+        int x = position.getX();
+        int y = position.getY();
+        String labelText = label.getText();
+
+        Rectangle bg = new Rectangle(x, y);
+        bg.changeSize(labelText.length() * 15 + 20, 50);
+        bg.changeColor("white");
+
+        TextBlock textBlock = new TextBlock(labelText, x + 10, y + 10);
+        textBlock.changeColor("black");
+
+        return List.of(new ShapesGEVisualNode(bg), new ShapesGEVisualNode(textBlock));
     }
 }

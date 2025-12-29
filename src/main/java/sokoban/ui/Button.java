@@ -2,13 +2,14 @@ package sokoban.ui;
 
 import sokoban.model.enums.GameAction;
 import sokoban.model.position.Position;
+import sokoban.render.enums.RenderType;
 
 public class Button extends UIElement {
     private String label;
     private GameAction action;
 
-    public Button(Position position, boolean visible, int width, int height, String label, GameAction action) {
-        super(position, visible, width, height);
+    public Button(Position position, boolean visible, String label, GameAction action) {
+        super(position, visible);
         this.label = label;
         this.action = action;
     }
@@ -36,5 +37,10 @@ public class Button extends UIElement {
     @Override
     public GameAction onClick() {
         return this.action;
+    }
+
+    @Override
+    public RenderType getRenderType() {
+        return RenderType.UI_BUTTON;
     }
 }

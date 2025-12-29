@@ -23,6 +23,8 @@ public class RenderNode {
         }
 
         this.position = newPosition;
+        // TODO
+        // probably useless
     }
 
     public void show() {
