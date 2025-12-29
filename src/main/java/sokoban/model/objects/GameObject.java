@@ -1,6 +1,7 @@
 package sokoban.model.objects;
 
 import sokoban.model.position.Position;
+import sokoban.render.enums.RenderType;
 
 public abstract class GameObject {
     private Position position;
@@ -28,6 +29,7 @@ public abstract class GameObject {
     public abstract boolean isBlocking();
     public abstract boolean isPushable();
     public abstract boolean isMoveable();
+    public abstract RenderType getRenderType();
 
     @Override
     public boolean equals(Object object) {

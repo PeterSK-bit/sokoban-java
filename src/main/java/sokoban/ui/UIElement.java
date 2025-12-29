@@ -2,6 +2,7 @@ package sokoban.ui;
 
 import sokoban.model.enums.GameAction;
 import sokoban.model.position.Position;
+import sokoban.render.enums.RenderType;
 
 public abstract class UIElement {
     private Position position;
@@ -9,11 +10,9 @@ public abstract class UIElement {
     private int width;
     private int height;
 
-    public UIElement(Position position, boolean visible, int width, int height) {
+    public UIElement(Position position, boolean visible) {
         this.position = position;
         this.visible = visible;
-        this.width = width;
-        this.height = height;
     }
 
     public Position getPosition() {
@@ -22,22 +21,6 @@ public abstract class UIElement {
 
     public boolean isVisible() {
         return this.visible;
-    }
-
-    public int getHeight() {
-        return this.height;
-    }
-
-    public int getWidth() {
-        return this.width;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
     }
 
     public void toggleVisibility() {
@@ -53,7 +36,14 @@ public abstract class UIElement {
     }
 
     public boolean isClicked(Position mouseClick) {
-        return this.position.equals(mouseClick);
+        int x = mouseClick.getX();
+        int y = mouseClick.getY();
+
+        if (x >= this.position.getX() && y >= this.position.getY()) {
+            return (x - this.width <= this.position.getX() && y - this.height <= this.position.getY());
+        }
+
+        return false;
     }
 
     public void move(Position newPosition) {
@@ -65,4 +55,5 @@ public abstract class UIElement {
     }
 
     public abstract GameAction onClick();
+    public abstract RenderType getRenderType();
 }
