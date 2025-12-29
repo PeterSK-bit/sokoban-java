@@ -1,20 +1,19 @@
 package sokoban.ui;
 
-import sokoban.model.enums.GameAction;
-import sokoban.ui.enums.UIState;
+import sokoban.render.core.RenderFactory;
 
 public class UIController {
-    private UIState currentState = UIState.MAIN_MENU;
+    private final RenderFactory renderFactory;
+
+    public UIController(RenderFactory renderFactory) {
+        this.renderFactory = renderFactory;
+    }
 
     public void showMainMenu() {
 
     }
 
-    public void showGameUI() {
-
-    }
-
-    public void handleAction(GameAction action) {
+    public void showGameUI(int levelNumber, String time, int moves, int pushes) {
 
     }
 }
