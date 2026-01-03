@@ -2,6 +2,7 @@
   "version": 1,
   "level" : {
     "name": "Beginner 2",
+    "id": 2,
     "levelNumber": 2,
     "width": 10,
     "height": 10,
