@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "level" : {
+    "name": "Beginner 2",
+    "levelNumber": 2,
+    "width": 10,
+    "height": 10,
+    "goals" : [
+      { "x":  3, "y":  3},
+      { "x":  6, "y":  6}
+    ],
+    "walls": [
+      { "x": 4, "y": 4 },
+      { "x": 5, "y": 5 }
+    ]
+  },
+  "state": {
+    "moves": 10,
+    "timeElapsed": 10,
+    "player": { "x": 4, "y": 7 },
+    "boxes": [
+      { "x": 2, "y": 3 },
+      { "x": 5, "y": 6 }
+    ]
+  }
+}
