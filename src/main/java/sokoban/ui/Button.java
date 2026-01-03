@@ -18,14 +18,6 @@ public class Button extends UIElement {
         return this.label;
     }
 
-    public GameAction getAction() {
-        return this.action;
-    }
-
-    public void setAction(GameAction action) {
-        this.action = action;
-    }
-
     public void setLabel(String label) {
         if (label == null) {
             throw new IllegalArgumentException("Label can not be null");

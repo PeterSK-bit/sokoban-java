@@ -1,9 +1,10 @@
 package sokoban.render.shapege;
 
-import fri.shapesge.Circle;
 import fri.shapesge.Rectangle;
-import fri.shapesge.TextBlock;
+import fri.shapesge.Circle;
 import fri.shapesge.Triangle;
+import fri.shapesge.TextBlock;
+import fri.shapesge.FontStyle;
 import sokoban.model.position.Position;
 import sokoban.render.api.IVisualNode;
 import sokoban.render.api.IVisualNodeFactory;
@@ -11,6 +12,7 @@ import sokoban.render.enums.RenderType;
 import sokoban.ui.Button;
 import sokoban.ui.Label;
 import sokoban.ui.UIElement;
+import sokoban.util.UIConstants;
 
 import java.util.List;
 
@@ -132,28 +134,46 @@ public class ShapesGEVisualFactory implements IVisualNodeFactory {
     private List<IVisualNode> createButton(Position position, Button button) {
         int x = position.getX();
         int y = position.getY();
+        int fontSize = UIConstants.DEFAULT_FONT_SIZE;
+        int padding = 10;
         String labelText = button.getLabel();
+        int width = (int)(labelText.length() * fontSize * UIConstants.COURIER_WIDTH + 2 * padding);
+        int height = (int)(UIConstants.COURIER_HEIGHT * fontSize + 2 * padding);
+
+        button.setHeight(height);
+        button.setWidth(width);
 
         Rectangle bg = new Rectangle(x, y);
-        bg.changeSize(labelText.length() * 15 + 20, 50);
-        bg.changeColor("white");
+        bg.changeSize(width, height);
+        bg.changeColor("black");
 
-        TextBlock textBlock = new TextBlock(labelText, x + 10, y + 10);
+        Rectangle bg2 = new Rectangle(x + 1, y + 1);
+        bg2.changeSize(width - 2, height - 2);
+        bg2.changeColor("white");
+
+        TextBlock textBlock = new TextBlock(labelText, x + padding, (int)(y + padding + UIConstants.COURIER_HEIGHT * fontSize));
+        textBlock.changeFont("Courier New", FontStyle.PLAIN, fontSize);
         textBlock.changeColor("black");
 
-        return List.of(new ShapesGEVisualNode(bg), new ShapesGEVisualNode(textBlock));
+        return List.of(new ShapesGEVisualNode(bg), new ShapesGEVisualNode(bg2), new ShapesGEVisualNode(textBlock));
     }
 
     private List<IVisualNode> createLabel(Position position, Label label) {
         int x = position.getX();
         int y = position.getY();
+        int fontSize = UIConstants.DEFAULT_FONT_SIZE;
+        int padding = 10;
         String labelText = label.getText();
 
         Rectangle bg = new Rectangle(x, y);
-        bg.changeSize(labelText.length() * 15 + 20, 50);
+        bg.changeSize(
+                (int)(labelText.length() * fontSize * UIConstants.COURIER_WIDTH + 2 * padding),
+                (int)(UIConstants.COURIER_HEIGHT * fontSize + 2 * padding)
+        );
         bg.changeColor("white");
 
-        TextBlock textBlock = new TextBlock(labelText, x + 10, y + 10);
+        TextBlock textBlock = new TextBlock(labelText, x + padding, (int)(y + padding + UIConstants.COURIER_HEIGHT * fontSize));
+        textBlock.changeFont("Courier New", FontStyle.PLAIN, fontSize);
         textBlock.changeColor("black");
 
         return List.of(new ShapesGEVisualNode(bg), new ShapesGEVisualNode(textBlock));

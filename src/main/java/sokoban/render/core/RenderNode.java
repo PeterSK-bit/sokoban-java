@@ -17,16 +17,6 @@ public class RenderNode {
         this.type = type;
     }
 
-    public void updatePosition(Position newPosition) {
-        if (newPosition == null) {
-            throw new IllegalArgumentException("New position can not by null");
-        }
-
-        this.position = newPosition;
-        // TODO
-        // probably useless
-    }
-
     public void show() {
         for (IVisualNode v : this.shape) {
             v.show();
