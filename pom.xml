@@ -14,6 +14,14 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.16.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>school</groupId>
+            <artifactId>shapesge</artifactId>
+            <version>2.1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/ShapesGE-2.1.0.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <properties>
