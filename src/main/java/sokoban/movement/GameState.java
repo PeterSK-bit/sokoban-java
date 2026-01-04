@@ -1,105 +1,31 @@
 package sokoban.movement;
 
 import sokoban.model.enums.Direction;
-import sokoban.model.level.Level;
 
-// because I can not use "import sokoban.model.objects.*;" :)
-import sokoban.model.objects.GameObject;
 import sokoban.model.objects.MoveableObject;
-import sokoban.model.objects.StaticObject;
-import sokoban.model.objects.Goal;
 import sokoban.model.objects.Player;
-import sokoban.model.objects.Box;
 
 import sokoban.model.position.Position;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GameState {
-    private final Level level;
-    private MoveableObject[][] moveableObjects;
-    private final List<Position> goalPositions;
-    private Position playerPosition;
+
     private final int width;
     private final int height;
 
+    private Position playerPosition;
+    private MoveableObject[][] moveableObjects;
+    private int moves;
+    private int timeElapsed;
 
-    public GameState(Level level) {
-        if (level == null) {
-            throw new IllegalArgumentException("Level can not be null");
-        }
-
-        this.level = level;
-        this.reset();
-        this.goalPositions = new ArrayList<Position>();
-        this.playerPosition = this.findPlayerPosition();
-        this.width = this.getLevel().getWidth();
-        this.height = this.getLevel().getHeight();
-
-        StaticObject[][] staticObjects = this.level.getStaticObjects();
-
-        for (int y = 0; y < this.level.getHeight(); y++) {
-            for (int x = 0; x < this.level.getWidth(); x++) {
-                if (staticObjects[y][x] instanceof Goal) {
-                    this.goalPositions.add(staticObjects[y][x].getPosition());
-                }
-            }
-        }
-    }
-
-    private Position findPlayerPosition() {
-        Position found = null;
-
-        for (MoveableObject[] line : this.getMoveableObjects()) {
-            for (MoveableObject object : line) {
-                if (object instanceof Player) {
-                    if (found != null) {
-                        throw new IllegalStateException("Multiple players found in moveableObjects grid");
-                    }
-                    found = object.getPosition();
-                }
-            }
-        }
-
-        if (found == null) {
-            throw new IllegalStateException("Player not found in moveableObjects grid");
-        }
-
-        return found;
-    }
-
-    public void reset() {
-        this.moveableObjects = this.level.getInitialMoveableObjects();
-    }
-
-    public boolean isCompleted() {
-        for (Position pos : this.goalPositions) {
-            if (!(this.moveableObjects[pos.getY()][pos.getX()] instanceof Box)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public GameObject getObjectAt(Position position) {
-        if (position == null) {
-            throw new IllegalArgumentException("Position can not be null");
-        }
-
-        int x = position.getX();
-        int y = position.getY();
-
-        if (x < 0 || x >= this.level.getWidth() || y < 0 || y >= this.level.getHeight()) {
-            throw new IllegalArgumentException("Position out of array bounds.");
-        }
-
-        if (this.moveableObjects[y][x] != null) {
-            return this.moveableObjects[y][x];
-        }
-
-        return this.level.getStaticObjectAt(position);
+    public GameState(
+            int width, int height, Position playerPosition, MoveableObject[][] moveableObjects, int moves, int timeElapsed
+    ) {
+        this.width = width;
+        this.height = height;
+        this.playerPosition = playerPosition;
+        this.moveableObjects = moveableObjects;
+        this.moves = moves;
+        this.timeElapsed = timeElapsed;
     }
 
     public MoveableObject getMoveableObjectAt(Position position) {
@@ -118,10 +44,6 @@ public class GameState {
         }
 
         return copy;
-    }
-
-    public Level getLevel() {
-        return this.level;
     }
 
     public void moveObject(Position position, Direction direction) {
@@ -171,5 +93,21 @@ public class GameState {
         }
 
         this.playerPosition = newPosition;
+    }
+
+    public int getMoves() {
+        return this.moves;
+    }
+
+    public void addMove() {
+        this.moves += 1;
+    }
+
+    public int getTimeElapsed() {
+        return this.timeElapsed;
+    }
+
+    public void setTimeElapsed(int timeElapsed) {
+        this.timeElapsed = timeElapsed;
     }
 }
