@@ -17,9 +17,43 @@ public class GameState {
     private int moves;
     private int timeElapsed;
 
-    public GameState(
-            int width, int height, Position playerPosition, MoveableObject[][] moveableObjects, int moves, int timeElapsed
-    ) {
+    public GameState(int width, int height, Position playerPosition, MoveableObject[][] moveableObjects, int moves, int timeElapsed) {
+        if (width < 1 || height < 1) {
+            throw new IllegalArgumentException("Metrics of level are too small");
+        }
+
+        if (playerPosition == null) {
+            throw new IllegalArgumentException("playerPosition can not be null");
+        }
+
+        int x = playerPosition.getX();
+        int y = playerPosition.getY();
+        if (x < 0 || x >= width || y < 0 || y >= height) {
+            throw new IllegalArgumentException("playerPosition out of level bound");
+        }
+
+        if (moveableObjects == null) {
+            throw new IllegalArgumentException("moveableObjects can not be null");
+        }
+
+        if (moveableObjects.length != height) {
+            throw new IllegalArgumentException("Miss match of height and height of moveableObjects array");
+        }
+
+        for (int i = 0; i < height; i++) {
+            if (moveableObjects[i].length != width) {
+                throw new IllegalArgumentException("Miss match of width and width of moveableObjects array");
+            }
+        }
+
+        if (moves < 0) {
+            throw new IllegalArgumentException("moves can not be negative");
+        }
+
+        if (timeElapsed < 0) {
+            throw new IllegalArgumentException("time can not be negative");
+        }
+
         this.width = width;
         this.height = height;
         this.playerPosition = playerPosition;

@@ -1,6 +1,7 @@
 package sokoban.movement;
 
 import sokoban.model.enums.Direction;
+import sokoban.model.level.Level;
 import sokoban.model.objects.Box;
 import sokoban.model.objects.MoveableObject;
 import sokoban.model.objects.Wall;
@@ -8,8 +9,18 @@ import sokoban.model.position.Position;
 
 public class MovementManager {
     private final GameState gameState;
+    private final Level level;
 
-    public MovementManager(GameState gameState) {
+    public MovementManager(Level level, GameState gameState) {
+        if (level == null) {
+            throw new IllegalArgumentException("level can not be null");
+        }
+
+        if (gameState == null) {
+            throw new IllegalArgumentException("gameState can not be null");
+        }
+
+        this.level = level;
         this.gameState = gameState;
     }
 
@@ -24,7 +35,7 @@ public class MovementManager {
 
         Position target = playerPosition.translate(direction);
 
-        if (this.gameState.getLevel().getStaticObjectAt(target) instanceof Wall) {
+        if (this.level.getStaticObjectAt(target) instanceof Wall) {
             return false;
         }
 
@@ -40,7 +51,7 @@ public class MovementManager {
 
         Position boxTarget = target.translate(direction);
 
-        if (this.gameState.getLevel().getStaticObjectAt(boxTarget) instanceof Wall) {
+        if (this.level.getStaticObjectAt(boxTarget) instanceof Wall) {
             return false;
         }
 

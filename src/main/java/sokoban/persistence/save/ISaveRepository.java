@@ -1,9 +1,10 @@
 package sokoban.persistence.save;
 
+import java.nio.file.Path;
 import java.util.List;
 
 public interface ISaveRepository {
     List<SaveDescriptor> listSaves();
-    void load(SaveDescriptor save);
-    void save(SaveDescriptor save);
+    GameSave load(Path savePath);
+    void save(GameSave save, Path savePath);
 }

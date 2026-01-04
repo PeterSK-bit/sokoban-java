@@ -1,4 +1,4 @@
-package sokoban.controller;
+package sokoban.game;
 
 import fri.shapesge.Manager;
 import sokoban.model.level.Level;
@@ -7,6 +7,7 @@ import sokoban.model.timer.Timer;
 import sokoban.movement.GameState;
 import sokoban.movement.MovementManager;
 import sokoban.persistence.save.FileSystemSaveRepository;
+import sokoban.persistence.save.SaveDescriptor;
 import sokoban.render.core.RenderFactory;
 import sokoban.render.core.RenderNode;
 import sokoban.render.core.Renderer;
@@ -40,10 +41,12 @@ public class GameController {
         this.timer = new Timer();
         this.manager.manageObject(this);
 
-        List<String> loadedSaves = this.fileSystemSaveRepository.scanSaveFolder();
-        this.renderer.render(this.uiController.renderMainMenu(loadedSaves));
+        List<SaveDescriptor> loadedSaves = this.fileSystemSaveRepository.listSaves();
+        this.renderer.render(this.uiController.renderMainMenu(
+                loadedSaves.stream().map(SaveDescriptor::displayName).toList()
+        ));
 
-        this.movementManager = new MovementManager(this.gameState);
+        this.movementManager = new MovementManager(this.currentLevel, this.gameState);
     }
 
     public void leftClick(int x, int y) {

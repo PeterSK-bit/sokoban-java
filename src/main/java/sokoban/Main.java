@@ -1,6 +1,6 @@
 package sokoban;
 
-import sokoban.controller.GameController;
+import sokoban.game.GameController;
 
 import java.io.IOException;
 

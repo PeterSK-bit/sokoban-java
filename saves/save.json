@@ -17,6 +17,7 @@
   },
   "state": {
     "moves": 0,
+    "pushes": 0,
     "timeElapsed": 0,
     "player": { "x": 4, "y": 7 },
     "boxes": [

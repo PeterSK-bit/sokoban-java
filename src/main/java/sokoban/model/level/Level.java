@@ -1,29 +1,29 @@
 package sokoban.model.level;
 
-// because I can not use "import sokoban.model.objects.*;" :)
-import sokoban.model.objects.GameObject;
-import sokoban.model.objects.MoveableObject;
 import sokoban.model.objects.StaticObject;
 
 import sokoban.model.position.Position;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Level {
+    private final String name;
     private final int width;
     private final int height;
-    private final MoveableObject[][] initialMoveableObjects;
     private final StaticObject[][] staticObjects;
+    private final Position playerStart;
+    private final List<Position> boxStarts;
+    private final List<Position> goalPositions;
 
-    public Level(int width, int height, MoveableObject[][] initialMoveableObjects, StaticObject[][] staticObjects) {
-        if (initialMoveableObjects.length != height) {
-            throw new IllegalArgumentException("Miss match of height and height of initialMoveableObjects array");
+    public Level(String name, int width, int height, StaticObject[][] staticObjects,
+                 Position playerStart, List<Position> boxStarts, List<Position> goalPositions) {
+        if (name == null) {
+            throw new IllegalArgumentException("Name can not by null");
         }
 
-        for (int i = 0; i < height; i++) {
-            if (initialMoveableObjects[i].length != width) {
-                throw new IllegalArgumentException("Miss match of width and width of initialMoveableObjects array");
-            }
+        if (width < 1 || height < 1) {
+            throw new IllegalArgumentException("Metrics of Level are too small");
         }
 
         if (staticObjects.length != height) {
@@ -36,10 +36,25 @@ public class Level {
             }
         }
 
+        if (playerStart == null) {
+            throw new IllegalArgumentException("playerStart position can not by null");
+        }
+
+        if (boxStarts == null) {
+            throw new IllegalArgumentException("boxStarts can not be null");
+        }
+
+        if (goalPositions == null) {
+            throw new IllegalArgumentException("goalPositions can not be null");
+        }
+
+        this.name = name;
         this.width = width;
         this.height = height;
-        this.initialMoveableObjects = initialMoveableObjects;
         this.staticObjects = staticObjects;
+        this.playerStart = playerStart;
+        this.boxStarts = List.copyOf(boxStarts);
+        this.goalPositions = List.copyOf(goalPositions);
     }
 
     private void ensureWithinBounds(Position position) {
@@ -51,6 +66,9 @@ public class Level {
         }
     }
 
+    public String getName() {
+        return this.name;
+    }
 
     public int getWidth() {
         return this.width;
@@ -70,30 +88,6 @@ public class Level {
         return this.staticObjects[position.getY()][position.getX()];
     }
 
-    public MoveableObject getInitialMoveableAt(Position position) {
-        if (position == null) {
-            throw new IllegalArgumentException("Position can not be null");
-        }
-
-        this.ensureWithinBounds(position);
-
-        return this.initialMoveableObjects[position.getY()][position.getX()];
-    }
-
-    public MoveableObject[][] getInitialMoveableObjects() {
-        MoveableObject[][] copy = new MoveableObject[this.initialMoveableObjects.length][];
-
-        for (int y = 0; y < this.initialMoveableObjects.length; y++) {
-            copy[y] = new MoveableObject[this.initialMoveableObjects[y].length];
-            for (int x = 0; x < this.initialMoveableObjects[y].length; x++) {
-                MoveableObject obj = this.initialMoveableObjects[y][x];
-                copy[y][x] = (obj == null ? null : obj.copy());
-            }
-        }
-
-        return copy;
-    }
-
     public StaticObject[][] getStaticObjects() {
         StaticObject[][] copy = new StaticObject[this.staticObjects.length][];
 
@@ -104,20 +98,15 @@ public class Level {
         return copy;
     }
 
-    public GameObject getObjectAt(Position position) {
-        if (position == null) {
-            throw new IllegalArgumentException("Position can not be null");
-        }
+    public Position getPlayerStart() {
+        return this.playerStart;
+    }
 
-        this.ensureWithinBounds(position);
+    public List<Position> getBoxStarts() {
+        return this.boxStarts;
+    }
 
-        int x = position.getX();
-        int y = position.getY();
-
-        if (this.initialMoveableObjects[y][x] != null) {
-            return this.initialMoveableObjects[y][x];
-        }
-
-        return this.staticObjects[y][x];
+    public List<Position> getGoalPositions() {
+        return this.goalPositions;
     }
 }
