@@ -18,15 +18,19 @@ public class GameStateFactory {
             grid[box.getY()][box.getX()] = new Box(box);
         }
 
-        return new GameState(level.getWidth(), level.getHeight(), level.getPlayerStart(), grid, 0, 0);
+        return new GameState(level.getWidth(), level.getHeight(), level.getPlayerStart(), grid, 0, 0, 0);
     }
 
     // for reset functionality
     public static GameState fromSave(Level level, GameState savedState) {
-        MoveableObject[][] grid = savedState.getMoveableObjects();
-        int moves = savedState.getMoves();
-        int timeElapsed = savedState.getTimeElapsed();
-
-        return new GameState(level.getWidth(), level.getHeight(), level.getPlayerStart(), grid, moves, timeElapsed);
+        return new GameState(
+                level.getWidth(),
+                level.getHeight(),
+                level.getPlayerStart(),
+                savedState.getMoveableObjects(),
+                savedState.getMoves(),
+                savedState.getPushes(),
+                savedState.getTimeElapsed()
+        );
     }
 }
