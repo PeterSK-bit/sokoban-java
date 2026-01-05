@@ -1,17 +1,16 @@
 package sokoban.ui;
 
-import sokoban.model.enums.GameAction;
 import sokoban.model.position.Position;
 import sokoban.render.enums.RenderType;
 
 public class Button extends UIElement {
     private String label;
-    private GameAction action;
+    private Runnable onClick;
 
-    public Button(Position position, boolean visible, String label, GameAction action) {
+    public Button(Position position, boolean visible, String label, Runnable onClick) {
         super(position, visible);
         this.label = label;
-        this.action = action;
+        this.onClick = onClick;
     }
 
     public String getLabel() {
@@ -27,8 +26,8 @@ public class Button extends UIElement {
     }
 
     @Override
-    public GameAction onClick() {
-        return this.action;
+    public void onClick() {
+        this.onClick.run();
     }
 
     @Override
