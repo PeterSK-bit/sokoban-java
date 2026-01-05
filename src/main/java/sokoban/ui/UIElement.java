@@ -1,6 +1,5 @@
 package sokoban.ui;
 
-import sokoban.model.enums.GameAction;
 import sokoban.model.position.Position;
 import sokoban.render.enums.RenderType;
 
