@@ -7,5 +7,6 @@ public enum RenderType {
     GOAL,
     FLOOR,
     UI_BUTTON,
-    UI_LABEL;
+    UI_LABEL,
+    BACKGROUND
 }

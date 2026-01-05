@@ -9,6 +9,7 @@ import sokoban.model.position.Position;
 import sokoban.render.api.IVisualNode;
 import sokoban.render.api.IVisualNodeFactory;
 import sokoban.render.enums.RenderType;
+import sokoban.ui.Background;
 import sokoban.ui.Button;
 import sokoban.ui.Label;
 import sokoban.ui.UIElement;
@@ -127,6 +128,7 @@ public class ShapesGEVisualFactory implements IVisualNodeFactory {
         return switch (element.getRenderType()) {
             case UI_BUTTON -> this.createButton(position, (Button)element);
             case UI_LABEL -> this.createLabel(position, (Label)element);
+            case BACKGROUND -> this.createBackground(position, (Background)element);
             default -> this.createFallback(position);
         };
     }
@@ -177,5 +179,16 @@ public class ShapesGEVisualFactory implements IVisualNodeFactory {
         textBlock.changeColor("black");
 
         return List.of(new ShapesGEVisualNode(bg), new ShapesGEVisualNode(textBlock));
+    }
+
+    private List<IVisualNode> createBackground(Position position, Background background) {
+        int x = position.getX();
+        int y = position.getY();
+
+        Rectangle bg = new Rectangle(x, y);
+        bg.changeSize(600, 600);
+        bg.changeColor(background.getColor());
+
+        return List.of(new ShapesGEVisualNode(bg));
     }
 }

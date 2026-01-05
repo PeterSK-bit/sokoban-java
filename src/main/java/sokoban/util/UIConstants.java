@@ -9,6 +9,10 @@ public final class UIConstants {
     public static final double COURIER_WIDTH = 0.6;
     public static final double COURIER_HEIGHT = 0.7;
 
+
+    public static final int WINDOW_WIDTH = 600;
+    public static final int WINDOW_HEIGHT = 600;
+
     private UIConstants() { }
 }
 
