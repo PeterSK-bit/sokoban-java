@@ -8,7 +8,7 @@ import sokoban.model.objects.Player;
 import sokoban.model.position.Position;
 import sokoban.model.timer.Timer;
 import sokoban.movement.GameState;
-//import sokoban.movement.MovementManager;
+import sokoban.movement.MovementManager;
 import sokoban.persistence.save.FileSystemSaveRepository;
 import sokoban.persistence.save.GameSave;
 import sokoban.persistence.save.SaveDescriptor;
@@ -28,11 +28,12 @@ public class GameController {
     private Level currentLevel;
     private GameState gameState;
     private ArrayList<RenderNode> scene = new ArrayList<>();
+    private ArrayList<RenderNode> uiScene = new ArrayList<>();
     private UIState uiState = UIState.MAIN_MENU;
     private final Manager manager = new Manager();
     private final Renderer renderer;
     private final FileSystemSaveRepository fileSystemSaveRepository;
-//    private final MovementManager movementManager;
+    private MovementManager movementManager;
     private final RenderFactory renderFactory;
     private final UIController uiController;
     private final Timer timer;
@@ -46,10 +47,8 @@ public class GameController {
         this.manager.manageObject(this);
 
         List<SaveDescriptor> loadedSaves = this.fileSystemSaveRepository.listSaves();
-        this.scene.addAll(this.uiController.renderMainMenu(loadedSaves));
-        this.renderer.render(this.scene);
-
-//        this.movementManager = new MovementManager(this.currentLevel, this.gameState);
+        this.uiScene.addAll(this.uiController.renderMainMenu(loadedSaves));
+        this.renderer.render(this.uiScene);
     }
 
     public void leftClick(int x, int y) {
@@ -62,14 +61,17 @@ public class GameController {
                 this.uiState = UIState.IN_GAME;
 
                 b.onClick();
-                this.renderer.remove(this.scene);
-                this.scene.clear();
-                this.renderer.render(this.uiController.renderGameUI(
+                this.movementManager = new MovementManager(this.currentLevel, this.gameState);
+                this.renderer.remove(this.uiScene);
+                this.uiScene.clear();
+                this.uiScene.addAll(this.uiController.renderGameUI(
                         this.currentLevel.getLevelNumber(),
                         this.convertTimeToString(this.gameState.getTimeElapsed()),
                         this.gameState.getMoves(),
                         this.gameState.getPushes()
                 ));
+                this.renderer.render(this.uiScene);
+                this.timer.start();
                 break;
             }
         }
@@ -77,6 +79,10 @@ public class GameController {
 
     public void resetGame() {
         System.out.format("RESET%n");
+
+        if (this.currentLevel != null && this.uiState == UIState.IN_GAME) {
+            this.gameState = GameStateFactory.fromLevel(this.currentLevel);
+        }
     }
 
     public void escape() {
@@ -114,5 +120,20 @@ public class GameController {
         int seconds = timeElapsedInSeconds % 60;
 
         return String.format("%02d:%02d", minutes, seconds);
+    }
+
+    public void tick() {
+        if (this.uiState == UIState.IN_GAME) {
+            this.renderer.remove(this.uiScene);
+            this.uiScene.clear();
+
+            this.uiScene.addAll(this.uiController.renderGameUI(
+                    this.currentLevel.getLevelNumber(),
+                    this.convertTimeToString(this.gameState.getTimeElapsed() + this.timer.getElapsedTime()),
+                    this.gameState.getMoves(),
+                    this.gameState.getPushes()
+            ));
+            this.renderer.render(this.uiScene);
+        }
     }
 }

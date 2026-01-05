@@ -13,10 +13,6 @@ import java.util.List;
 public class UIController {
     private final RenderFactory renderFactory;
     private final GameController gameController;
-    private int levelNumber = -1;
-    private String time = "";
-    private int moves = -1;
-    private int pushes = -1;
     private List<Button> activeButtons = new ArrayList<>();
 
     public UIController(RenderFactory renderFactory, GameController gameController) {
@@ -64,35 +60,23 @@ public class UIController {
         Background bg = new Background(new Position(0, 0), true, "#2C2C2C");
         scene.add(this.renderFactory.createForUIElement(bg));
 
-        if (this.levelNumber != levelNumber) {
-            this.levelNumber = levelNumber;
-            Label levelLabel = new Label(new Position(x, 0), true, "Level " + levelNumber);
-            scene.add(this.renderFactory.createForUIElement(levelLabel));
-        }
+        Label levelLabel = new Label(new Position(x, 0), true, "Level " + levelNumber);
+        scene.add(this.renderFactory.createForUIElement(levelLabel));
 
-        x += (String.valueOf(this.levelNumber).length() + 6) * fontSize * 0.55 + 2 * padding;
+        x += (String.valueOf(levelNumber).length() + 6) * fontSize * 0.55 + 2 * padding;
 
-        if (!time.equals(this.time)) {
-            this.time = time;
-            Label timeLabel = new Label(new Position(x, 0), true, "Time: " + time);
-            scene.add(this.renderFactory.createForUIElement(timeLabel));
-        }
+        Label timeLabel = new Label(new Position(x, 0), true, "Time: " + time);
+        scene.add(this.renderFactory.createForUIElement(timeLabel));
 
-        x += (this.time.length() + 6) * fontSize * 0.55 + 2 * padding;
+        x += (time.length() + 6) * fontSize * 0.55 + 2 * padding;
 
-        if (this.moves != moves) {
-            this.moves = moves;
-            Label movesLabel = new Label(new Position(x, 0), true, "Moves: " + moves);
-            scene.add(this.renderFactory.createForUIElement(movesLabel));
-        }
+        Label movesLabel = new Label(new Position(x, 0), true, "Moves: " + moves);
+        scene.add(this.renderFactory.createForUIElement(movesLabel));
 
-        x += (String.valueOf(this.moves).length() + 7) * fontSize * 0.55 + 2 * padding;
+        x += (String.valueOf(moves).length() + 7) * fontSize * 0.55 + 2 * padding;
 
-        if (this.pushes != pushes) {
-            this.pushes = pushes;
-            Label pushesLabel = new Label(new Position(x, 0), true, "Pushes: " + pushes);
-            scene.add(this.renderFactory.createForUIElement(pushesLabel));
-        }
+        Label pushesLabel = new Label(new Position(x, 0), true, "Pushes: " + pushes);
+        scene.add(this.renderFactory.createForUIElement(pushesLabel));
 
         return scene;
     }
