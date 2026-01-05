@@ -75,6 +75,6 @@ public abstract class UIElement {
         this.position = newPosition;
     }
 
-    public abstract GameAction onClick();
+    public abstract void onClick();
     public abstract RenderType getRenderType();
 }

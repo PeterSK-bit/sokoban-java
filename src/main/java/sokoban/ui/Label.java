@@ -1,6 +1,5 @@
 package sokoban.ui;
 
-import sokoban.model.enums.GameAction;
 import sokoban.model.position.Position;
 import sokoban.render.enums.RenderType;
 
@@ -25,8 +24,8 @@ public class Label extends UIElement {
     }
 
     @Override
-    public GameAction onClick() {
-        return null;
+    public void onClick() {
+
     }
 
     @Override
