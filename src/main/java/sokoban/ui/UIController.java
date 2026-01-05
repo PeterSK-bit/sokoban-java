@@ -1,7 +1,8 @@
 package sokoban.ui;
 
-import sokoban.model.enums.GameAction;
+import sokoban.game.GameController;
 import sokoban.model.position.Position;
+import sokoban.persistence.save.SaveDescriptor;
 import sokoban.render.core.RenderFactory;
 import sokoban.render.core.RenderNode;
 import sokoban.util.UIConstants;
@@ -11,21 +12,23 @@ import java.util.List;
 
 public class UIController {
     private final RenderFactory renderFactory;
+    private final GameController gameController;
     private int levelNumber = -1;
     private String time = "";
     private int moves = -1;
     private int pushes = -1;
     private List<Button> activeButtons = new ArrayList<>();
 
-    public UIController(RenderFactory renderFactory) {
+    public UIController(RenderFactory renderFactory, GameController gameController) {
         this.renderFactory = renderFactory;
+        this.gameController = gameController;
     }
 
     public List<Button> getActiveButtons() {
         return this.activeButtons;
     }
 
-    public List<RenderNode> renderMainMenu(List<String> savesFound) {
+    public List<RenderNode> renderMainMenu(List<SaveDescriptor> savesFound) {
         this.activeButtons.clear();
 
         int fontSize = UIConstants.DEFAULT_FONT_SIZE;
@@ -35,8 +38,10 @@ public class UIController {
         int y = padding;
         ArrayList<RenderNode> scene = new ArrayList<>();
 
-        for (String save : savesFound) {
-            Button levelButton = new Button(new Position(x, y), true, save, GameAction.LOAD_GAME);
+        for (SaveDescriptor save : savesFound) {
+            Button levelButton = new Button(
+                    new Position(x, y), true, save.displayName(), () -> this.gameController.loadSave(save)
+            );
             this.activeButtons.add(levelButton);
             scene.add(this.renderFactory.createForUIElement(levelButton));
             y += (2 * padding + fontHeightHeuristic * fontSize + 4);
