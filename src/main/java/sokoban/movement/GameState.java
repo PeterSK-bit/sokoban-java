@@ -15,9 +15,12 @@ public class GameState {
     private Position playerPosition;
     private MoveableObject[][] moveableObjects;
     private int moves;
+    private int pushes;
     private int timeElapsed;
 
-    public GameState(int width, int height, Position playerPosition, MoveableObject[][] moveableObjects, int moves, int timeElapsed) {
+    public GameState(
+            int width, int height, Position playerPosition, MoveableObject[][] moveableObjects, int moves, int pushes, int timeElapsed
+    ) {
         if (width < 1 || height < 1) {
             throw new IllegalArgumentException("Metrics of level are too small");
         }
@@ -50,6 +53,10 @@ public class GameState {
             throw new IllegalArgumentException("moves can not be negative");
         }
 
+        if (pushes < 0) {
+            throw new IllegalArgumentException("pushes can not be negative");
+        }
+
         if (timeElapsed < 0) {
             throw new IllegalArgumentException("time can not be negative");
         }
@@ -59,6 +66,7 @@ public class GameState {
         this.playerPosition = playerPosition;
         this.moveableObjects = moveableObjects;
         this.moves = moves;
+        this.pushes = pushes;
         this.timeElapsed = timeElapsed;
     }
 
@@ -135,6 +143,10 @@ public class GameState {
 
     public void addMove() {
         this.moves += 1;
+    }
+
+    public int getPushes() {
+        return this.pushes;
     }
 
     public int getTimeElapsed() {

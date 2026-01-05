@@ -1,12 +1,19 @@
 package sokoban.model.position;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import sokoban.model.enums.Direction;
 
 public class Position {
     private final int x;
     private final int y;
 
-    public Position(int x, int y) {
+    @JsonCreator
+    public Position(
+            @JsonProperty("x") int x,
+            @JsonProperty("y") int y
+    ) {
         this.x = x;
         this.y = y;
     }
