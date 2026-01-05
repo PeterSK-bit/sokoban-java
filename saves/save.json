@@ -6,7 +6,7 @@
     "levelNumber": 1,
     "width": 10,
     "height": 10,
-    "playerStart": { "x": 4, "y": 7 },
+    "playerStart": { "x": 4, "y": 5 },
     "boxStarts": [
       { "x": 2, "y": 3 },
       { "x": 5, "y": 6 }
@@ -24,7 +24,7 @@
     "moves": 0,
     "pushes": 0,
     "timeElapsed": 0,
-    "player": { "x": 4, "y": 7 },
+    "player": { "x": 4, "y": 5 },
     "boxes": [
       { "x": 2, "y": 3 },
       { "x": 5, "y": 6 }

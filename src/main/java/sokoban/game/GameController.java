@@ -5,6 +5,7 @@ import sokoban.model.level.Level;
 import sokoban.model.objects.Box;
 import sokoban.model.objects.MoveableObject;
 import sokoban.model.objects.Player;
+import sokoban.model.objects.StaticObject;
 import sokoban.model.position.Position;
 import sokoban.model.timer.Timer;
 import sokoban.movement.GameState;
@@ -15,6 +16,7 @@ import sokoban.persistence.save.SaveDescriptor;
 import sokoban.render.core.RenderFactory;
 import sokoban.render.core.RenderNode;
 import sokoban.render.core.Renderer;
+import sokoban.render.enums.RenderType;
 import sokoban.render.shapege.ShapesGEVisualFactory;
 import sokoban.ui.Button;
 import sokoban.ui.UIController;
@@ -71,6 +73,7 @@ public class GameController {
                         this.gameState.getPushes()
                 ));
                 this.renderer.render(this.uiScene);
+                this.renderBoard();
                 this.timer.start();
                 break;
             }
@@ -87,6 +90,22 @@ public class GameController {
 
     public void escape() {
         System.out.format("ESCAPE%n");
+    }
+
+    public void moveUp() {
+
+    }
+
+    public void moveDown() {
+
+    }
+
+    public void moveLeft() {
+
+    }
+
+    public void moveRight() {
+
     }
 
     public void loadSave(SaveDescriptor saveDescriptor) {
@@ -115,13 +134,6 @@ public class GameController {
         );
     }
 
-    private String convertTimeToString(int timeElapsedInSeconds) {
-        int minutes = timeElapsedInSeconds / 60;
-        int seconds = timeElapsedInSeconds % 60;
-
-        return String.format("%02d:%02d", minutes, seconds);
-    }
-
     public void tick() {
         if (this.uiState == UIState.IN_GAME) {
             this.renderer.remove(this.uiScene);
@@ -133,7 +145,56 @@ public class GameController {
                     this.gameState.getMoves(),
                     this.gameState.getPushes()
             ));
+
             this.renderer.render(this.uiScene);
         }
+    }
+
+    private void renderBoard() {
+        this.renderer.remove(this.scene);
+        this.scene.clear();
+
+        for (StaticObject[] line : this.currentLevel.getStaticObjects()) {
+            for (StaticObject object : line) {
+                if (object == null) {
+                    continue;
+                }
+                int x = object.getPosition().getX();
+                int y = object.getPosition().getY();
+
+                this.scene.add(this.renderFactory.createForGameObject(
+                        object.getRenderType(), new Position(x * 50, 30 + y * 50))
+                );
+            }
+        }
+
+        for (MoveableObject[] line : this.gameState.getMoveableObjects()) {
+            for (MoveableObject object : line) {
+                if (object == null) {
+                    continue;
+                }
+                int x = object.getPosition().getX();
+                int y = object.getPosition().getY();
+
+                this.scene.add(this.renderFactory.createForGameObject(
+                        object.getRenderType(), new Position(x * 50, 30 + y * 50))
+                );
+            }
+        }
+        int x = this.gameState.getPlayerPosition().getX();
+        int y = this.gameState.getPlayerPosition().getY();
+
+        this.scene.add(this.renderFactory.createForGameObject(
+                RenderType.PLAYER, new Position(x * 50, 30 + y * 50))
+        );
+
+        this.renderer.render(this.scene);
+    }
+
+    private String convertTimeToString(int timeElapsedInSeconds) {
+        int minutes = timeElapsedInSeconds / 60;
+        int seconds = timeElapsedInSeconds % 60;
+
+        return String.format("%02d:%02d", minutes, seconds);
     }
 }

@@ -2,7 +2,6 @@ package sokoban.render.shapege;
 
 import fri.shapesge.Rectangle;
 import fri.shapesge.Circle;
-import fri.shapesge.Triangle;
 import fri.shapesge.TextBlock;
 import fri.shapesge.FontStyle;
 import sokoban.model.position.Position;
@@ -31,12 +30,12 @@ public class ShapesGEVisualFactory implements IVisualNodeFactory {
     }
 
     private List<IVisualNode> createPlayer(Position position) {
-        Triangle t = new Triangle(position.getX(), position.getY());
-        t.changeColor("blue");
-        t.changeSize(50, 50);
+        Circle c = new Circle(position.getX() + 12, position.getY() + 12);
+        c.changeSize(25);
+        c.changeColor("blue");
 
         return List.of(
-                new ShapesGEVisualNode(t)
+                new ShapesGEVisualNode(c)
         );
     }
 
@@ -76,15 +75,15 @@ public class ShapesGEVisualFactory implements IVisualNodeFactory {
         r.changeColor("sand");
 
         return List.of(
-                new ShapesGEVisualNode(c),
-                new ShapesGEVisualNode(r)
+                new ShapesGEVisualNode(r),
+                new ShapesGEVisualNode(c)
         );
     }
 
     private List<IVisualNode> createFloor(Position position) {
         Rectangle r = new Rectangle(position.getX(), position.getY());
         r.changeSize(50, 50);
-        r.changeColor("sandy");
+        r.changeColor("sand");
 
         return List.of(new ShapesGEVisualNode(r));
     }
@@ -95,7 +94,7 @@ public class ShapesGEVisualFactory implements IVisualNodeFactory {
 
         Rectangle r1 = new Rectangle(x, y);
         r1.changeColor("black");
-        r1.changeSize(25, 25);
+        r1.changeSize(50, 50);
 
         Rectangle r2 = new Rectangle(x + 25, y);
         r2.changeColor("pink");
@@ -105,15 +104,10 @@ public class ShapesGEVisualFactory implements IVisualNodeFactory {
         r3.changeColor("pink");
         r3.changeSize(25, 25);
 
-        Rectangle r4 = new Rectangle(x + 25, y + 25);
-        r4.changeColor("black");
-        r4.changeSize(25, 25);
-
         return List.of(
                 new ShapesGEVisualNode(r1),
                 new ShapesGEVisualNode(r2),
-                new ShapesGEVisualNode(r3),
-                new ShapesGEVisualNode(r4)
+                new ShapesGEVisualNode(r3)
         );
     }
 

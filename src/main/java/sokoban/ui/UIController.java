@@ -34,9 +34,6 @@ public class UIController {
         int y = padding;
         ArrayList<RenderNode> scene = new ArrayList<>();
 
-        Background bg = new Background(new Position(0, 0), true, "#2C2C2C");
-        scene.add(this.renderFactory.createForUIElement(bg));
-
         for (SaveDescriptor save : savesFound) {
             Button levelButton = new Button(
                     new Position(x, y), true, save.displayName(), () -> this.gameController.loadSave(save)
@@ -56,9 +53,6 @@ public class UIController {
         int padding = 10;
         int fontSize = 10;
         int x = 0;
-
-        Background bg = new Background(new Position(0, 0), true, "#2C2C2C");
-        scene.add(this.renderFactory.createForUIElement(bg));
 
         Label levelLabel = new Label(new Position(x, 0), true, "Level " + levelNumber);
         scene.add(this.renderFactory.createForUIElement(levelLabel));

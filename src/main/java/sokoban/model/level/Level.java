@@ -3,6 +3,7 @@ package sokoban.model.level;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import sokoban.model.objects.Floor;
 import sokoban.model.objects.Goal;
 import sokoban.model.objects.StaticObject;
 
@@ -89,6 +90,14 @@ public class Level {
 
         for (Position wp : wallPositions) {
             grid[wp.getY()][wp.getX()] = new Wall(wp);
+        }
+
+        for (int y = 0; y < this.height; y++) {
+            for (int x = 0; x < this.width; x++) {
+                if (grid[y][x] == null) {
+                    grid[y][x] = new Floor(new Position(x, y));
+                }
+            }
         }
 
         return grid;
