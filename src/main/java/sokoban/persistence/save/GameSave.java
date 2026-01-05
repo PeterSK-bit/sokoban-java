@@ -5,6 +5,6 @@ import sokoban.model.level.Level;
 public record GameSave(
         int version,
         Level level,
-        GameStateSave gameStateSave
+        GameStateSave state
 ) { }
 
