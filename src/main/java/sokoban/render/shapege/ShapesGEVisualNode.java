@@ -1,6 +1,5 @@
 package sokoban.render.shapege;
 
-import sokoban.model.position.Position;
 import sokoban.render.api.IVisualNode;
 
 public class ShapesGEVisualNode implements IVisualNode {
@@ -21,16 +20,6 @@ public class ShapesGEVisualNode implements IVisualNode {
     @Override
     public void hide() {
         this.visibility.makeInvisible();
-    }
-
-    @Override
-    public void setPosition(Position p) {
-        // no need for it yet
-    }
-
-    @Override
-    public void remove() {
-        // no need for it yet
     }
 }
 

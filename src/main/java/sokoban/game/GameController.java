@@ -46,7 +46,8 @@ public class GameController {
         this.manager.manageObject(this);
 
         List<SaveDescriptor> loadedSaves = this.fileSystemSaveRepository.listSaves();
-        this.renderer.render(this.uiController.renderMainMenu(loadedSaves));
+        this.scene.addAll(this.uiController.renderMainMenu(loadedSaves));
+        this.renderer.render(this.scene);
 
 //        this.movementManager = new MovementManager(this.currentLevel, this.gameState);
     }
@@ -59,9 +60,10 @@ public class GameController {
             if (b.isClicked(clickPosition)) {
                 System.out.println("clicked");
                 this.uiState = UIState.IN_GAME;
-                this.scene.clear();
 
                 b.onClick();
+                this.renderer.remove(this.scene);
+                this.scene.clear();
                 this.renderer.render(this.uiController.renderGameUI(
                         this.currentLevel.getLevelNumber(),
                         this.convertTimeToString(this.gameState.getTimeElapsed()),

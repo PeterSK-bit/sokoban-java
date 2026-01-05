@@ -8,4 +8,10 @@ public class Renderer {
             node.show();
         }
     }
+
+    public void remove(List<RenderNode> scene) {
+        for (RenderNode node : scene) {
+            node.hide();
+        }
+    }
 }
