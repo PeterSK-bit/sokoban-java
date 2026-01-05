@@ -6,6 +6,11 @@
     "levelNumber": 1,
     "width": 10,
     "height": 10,
+    "playerStart": { "x": 4, "y": 7 },
+    "boxStarts": [
+      { "x": 2, "y": 3 },
+      { "x": 5, "y": 6 }
+    ],
     "goals" : [
       { "x":  3, "y":  3},
       { "x":  6, "y":  6}
