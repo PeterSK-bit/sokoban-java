@@ -19,6 +19,10 @@ public class Position {
         return this.y;
     }
 
+    public Position translate(Direction direction) {
+        return new Position(this.x + direction.dx(), this.y + direction.dy());
+    }
+
     @Override
     public boolean equals(Object object) {
         if (object == this) {
@@ -34,13 +38,14 @@ public class Position {
         return (this.x == position.x && this.y == position.y);
     }
 
-    public Position translate(Direction direction) {
-        return new Position(this.x + direction.dx(), this.y + direction.dy());
-    }
-
     // Required for correct behavior in hash-based collections (maybe will come handy)
     @Override
     public int hashCode() {
         return 31 * this.x + this.y; // 31 is a standard prime used for good hash distribution
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[%d; %d]", this.x, this.y);
     }
 }
