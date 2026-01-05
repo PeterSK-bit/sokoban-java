@@ -1,6 +1,7 @@
 package sokoban.game;
 
 import fri.shapesge.Manager;
+import sokoban.model.enums.Direction;
 import sokoban.model.level.Level;
 import sokoban.model.objects.Box;
 import sokoban.model.objects.MoveableObject;
@@ -93,19 +94,31 @@ public class GameController {
     }
 
     public void moveUp() {
-
+        if (this.uiState == UIState.IN_GAME) {
+            this.movementManager.tryMove(Direction.UP);
+            this.renderBoard();
+        }
     }
 
     public void moveDown() {
-
+        if (this.uiState == UIState.IN_GAME) {
+            this.movementManager.tryMove(Direction.DOWN);
+            this.renderBoard();
+        }
     }
 
     public void moveLeft() {
-
+        if (this.uiState == UIState.IN_GAME) {
+            this.movementManager.tryMove(Direction.LEFT);
+            this.renderBoard();
+        }
     }
 
     public void moveRight() {
-
+        if (this.uiState == UIState.IN_GAME) {
+            this.movementManager.tryMove(Direction.RIGHT);
+            this.renderBoard();
+        }
     }
 
     public void loadSave(SaveDescriptor saveDescriptor) {

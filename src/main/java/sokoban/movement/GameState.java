@@ -71,7 +71,8 @@ public class GameState {
     }
 
     public MoveableObject getMoveableObjectAt(Position position) {
-        return this.moveableObjects[position.getY()][position.getX()].copy();
+        MoveableObject object = this.moveableObjects[position.getY()][position.getX()];
+        return (object == null ? null : object.copy());
     }
 
     public MoveableObject[][] getMoveableObjects() {
