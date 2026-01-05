@@ -2,11 +2,15 @@ package sokoban.game;
 
 import fri.shapesge.Manager;
 import sokoban.model.level.Level;
+import sokoban.model.objects.Box;
+import sokoban.model.objects.MoveableObject;
+import sokoban.model.objects.Player;
 import sokoban.model.position.Position;
 import sokoban.model.timer.Timer;
 import sokoban.movement.GameState;
-import sokoban.movement.MovementManager;
+//import sokoban.movement.MovementManager;
 import sokoban.persistence.save.FileSystemSaveRepository;
+import sokoban.persistence.save.GameSave;
 import sokoban.persistence.save.SaveDescriptor;
 import sokoban.render.core.RenderFactory;
 import sokoban.render.core.RenderNode;
@@ -16,11 +20,11 @@ import sokoban.ui.Button;
 import sokoban.ui.UIController;
 import sokoban.ui.enums.UIState;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
+    private GameSave currentGame;
     private Level currentLevel;
     private GameState gameState;
     private ArrayList<RenderNode> scene = new ArrayList<>();
@@ -28,40 +32,42 @@ public class GameController {
     private final Manager manager = new Manager();
     private final Renderer renderer;
     private final FileSystemSaveRepository fileSystemSaveRepository;
-    private final MovementManager movementManager;
+//    private final MovementManager movementManager;
     private final RenderFactory renderFactory;
     private final UIController uiController;
     private final Timer timer;
 
-    public GameController() throws IOException {
+    public GameController() {
         this.renderer = new Renderer();
         this.fileSystemSaveRepository = new FileSystemSaveRepository();
         this.renderFactory = new RenderFactory(new ShapesGEVisualFactory());
-        this.uiController = new UIController(this.renderFactory);
+        this.uiController = new UIController(this.renderFactory, this);
         this.timer = new Timer();
         this.manager.manageObject(this);
 
         List<SaveDescriptor> loadedSaves = this.fileSystemSaveRepository.listSaves();
-        this.renderer.render(this.uiController.renderMainMenu(
-                loadedSaves.stream().map(SaveDescriptor::displayName).toList()
-        ));
+        this.renderer.render(this.uiController.renderMainMenu(loadedSaves));
 
-        this.movementManager = new MovementManager(this.currentLevel, this.gameState);
+//        this.movementManager = new MovementManager(this.currentLevel, this.gameState);
     }
 
     public void leftClick(int x, int y) {
         System.out.format("LEFT [%d, %d]%n", x, y);
+        Position clickPosition = new Position(x, y);
 
         for (Button b : this.uiController.getActiveButtons()) {
-            if (b.isClicked(new Position(x, y))) {
+            if (b.isClicked(clickPosition)) {
                 System.out.println("clicked");
-                switch (b.onClick()) {
-                    case LOAD_GAME -> {
-                        this.uiState = UIState.IN_GAME;
-                        this.scene.clear();
-                        this.renderer.render(this.uiController.renderGameUI(1, "00:01", 1, 0));
-                    }
-                }
+                this.uiState = UIState.IN_GAME;
+                this.scene.clear();
+
+                b.onClick();
+                this.renderer.render(this.uiController.renderGameUI(
+                        this.currentLevel.getLevelNumber(),
+                        this.convertTimeToString(this.gameState.getTimeElapsed()),
+                        this.gameState.getMoves(),
+                        this.gameState.getPushes()
+                ));
                 break;
             }
         }
@@ -73,5 +79,38 @@ public class GameController {
 
     public void escape() {
         System.out.format("ESCAPE%n");
+    }
+
+    public void loadSave(SaveDescriptor saveDescriptor) {
+        this.currentGame = FileSystemSaveRepository.load(saveDescriptor.path());
+        this.currentLevel = this.currentGame.level();
+
+        int width = this.currentLevel.getWidth();
+        int height = this.currentLevel.getHeight();
+        MoveableObject[][] grid = new MoveableObject[height][width];
+
+        Position pp = this.currentGame.state().player();
+        grid[pp.getY()][pp.getX()] = new Player(pp);
+
+        for (Position bp : this.currentGame.state().boxes()) {
+            grid[bp.getY()][bp.getX()] = new Box(bp);
+        }
+
+        this.gameState = new GameState(
+                width,
+                height,
+                this.currentGame.state().player(),
+                grid,
+                this.currentGame.state().moves(),
+                this.currentGame.state().pushes(),
+                this.currentGame.state().timeElapsed()
+        );
+    }
+
+    private String convertTimeToString(int timeElapsedInSeconds) {
+        int minutes = timeElapsedInSeconds / 60;
+        int seconds = timeElapsedInSeconds % 60;
+
+        return String.format("%02d:%02d", minutes, seconds);
     }
 }
