@@ -7,9 +7,9 @@ import sokoban.render.enums.RenderType;
 import java.util.List;
 
 public class RenderNode {
-    private Position position;
-    private RenderType type;
-    private List<IVisualNode> shape;
+    private final Position position;
+    private final RenderType type;
+    private final List<IVisualNode> shape;
 
     public RenderNode(Position position, List<IVisualNode> shape, RenderType type) {
         this.position = position;

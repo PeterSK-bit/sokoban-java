@@ -5,7 +5,7 @@ import sokoban.render.enums.RenderType;
 
 public class Button extends UIElement {
     private String label;
-    private Runnable onClick;
+    private final Runnable onClick;
 
     public Button(Position position, boolean visible, String label, Runnable onClick) {
         super(position, visible);
@@ -15,14 +15,6 @@ public class Button extends UIElement {
 
     public String getLabel() {
         return this.label;
-    }
-
-    public void setLabel(String label) {
-        if (label == null) {
-            throw new IllegalArgumentException("Label can not be null");
-        }
-
-        this.label = label;
     }
 
     @Override

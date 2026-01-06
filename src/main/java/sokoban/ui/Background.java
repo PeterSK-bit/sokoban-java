@@ -5,10 +5,10 @@ import sokoban.render.enums.RenderType;
 import sokoban.util.UIConstants;
 
 public class Background extends UIElement {
-    private RenderType renderType = RenderType.BACKGROUND;
-    private String color;
-    private int width;
-    private int height;
+    private final RenderType renderType = RenderType.BACKGROUND;
+    private final String color;
+    private final int width;
+    private final int height;
 
     public Background(Position position, boolean visible, String color) {
         super(position, visible);

@@ -12,8 +12,8 @@ public class GameState {
     private final int width;
     private final int height;
 
-    private Player player;
-    private MoveableObject[][] moveableObjects;
+    private final Player player;
+    private final MoveableObject[][] moveableObjects;
     private int moves;
     private int pushes;
     private int timeElapsed;

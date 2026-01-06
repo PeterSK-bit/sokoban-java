@@ -145,11 +145,11 @@ public class Level {
         }
 
         if (walls.contains(this.playerStart)) {
-            throw new IllegalStateException("Wall is covering player at " + this.playerStart.toString());
+            throw new IllegalStateException("Wall is covering player at " + this.playerStart);
         }
 
         if (boxes.contains(this.playerStart)) {
-            throw new IllegalStateException("Box is covering player at " + this.playerStart.toString());
+            throw new IllegalStateException("Box is covering player at " + this.playerStart);
         }
     }
 

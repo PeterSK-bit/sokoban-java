@@ -13,7 +13,7 @@ import java.util.List;
 public class UIController {
     private final RenderFactory renderFactory;
     private final GameController gameController;
-    private List<Button> activeButtons = new ArrayList<>();
+    private final List<Button> activeButtons = new ArrayList<>();
 
     public UIController(RenderFactory renderFactory, GameController gameController) {
         this.renderFactory = renderFactory;
@@ -30,13 +30,12 @@ public class UIController {
         int fontSize = UIConstants.DEFAULT_FONT_SIZE;
         int padding = UIConstants.DEFAULT_PADDING;
         double fontHeightHeuristic = UIConstants.COURIER_HEIGHT;
-        int x = padding;
         int y = padding;
         ArrayList<RenderNode> scene = new ArrayList<>();
 
         for (SaveDescriptor save : savesFound) {
             Button levelButton = new Button(
-                    new Position(x, y), true, save.displayName(), () -> this.gameController.loadSave(save)
+                    new Position(padding, y), true, save.displayName(), () -> this.gameController.loadSave(save)
             );
             this.activeButtons.add(levelButton);
             scene.add(this.renderFactory.createForUIElement(levelButton));

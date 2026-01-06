@@ -15,14 +15,6 @@ public class Label extends UIElement {
         return this.text;
     }
 
-    public void setText(String text) {
-        if (text == null) {
-            throw new IllegalArgumentException("Text can not be null");
-        }
-
-        this.text = text;
-    }
-
     @Override
     public void onClick() {
 
