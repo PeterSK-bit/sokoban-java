@@ -28,26 +28,25 @@ public class GameController {
     private GameSave currentGame;
     private Level currentLevel;
     private GameState gameState;
-    private ArrayList<RenderNode> scene = new ArrayList<>();
-    private ArrayList<RenderNode> uiScene = new ArrayList<>();
     private UIState uiState = UIState.MAIN_MENU;
-    private final Manager manager = new Manager();
-    private final Renderer renderer;
-    private final FileSystemSaveRepository fileSystemSaveRepository;
     private MovementManager movementManager;
+    private final ArrayList<RenderNode> scene = new ArrayList<>();
+    private final ArrayList<RenderNode> uiScene = new ArrayList<>();
+    private final Renderer renderer;
     private final RenderFactory renderFactory;
     private final UIController uiController;
     private final Timer timer;
 
     public GameController() {
         this.renderer = new Renderer();
-        this.fileSystemSaveRepository = new FileSystemSaveRepository();
         this.renderFactory = new RenderFactory(new ShapesGEVisualFactory());
         this.uiController = new UIController(this.renderFactory, this);
         this.timer = new Timer();
-        this.manager.manageObject(this);
 
-        List<SaveDescriptor> loadedSaves = this.fileSystemSaveRepository.listSaves();
+        Manager manager = new Manager();
+        manager.manageObject(this);
+
+        List<SaveDescriptor> loadedSaves = FileSystemSaveRepository.listSaves();
         this.uiScene.addAll(this.uiController.renderMainMenu(loadedSaves));
         this.renderer.render(this.uiScene);
     }
@@ -101,7 +100,7 @@ public class GameController {
             this.timer.reset();
 
 
-            List<SaveDescriptor> loadedSaves = this.fileSystemSaveRepository.listSaves();
+            List<SaveDescriptor> loadedSaves = FileSystemSaveRepository.listSaves();
             this.uiScene.addAll(this.uiController.renderMainMenu(loadedSaves));
             this.renderer.render(this.uiScene);
         }
@@ -110,9 +109,7 @@ public class GameController {
     public void moveUp() {
         if (this.uiState == UIState.IN_GAME) {
             switch (this.movementManager.tryMove(Direction.UP)) {
-                case PASS -> {
-                    this.move();
-                }
+                case PASS -> this.move();
                 case PUSHED -> {
                     this.gameState.addPush();
                     this.move();
@@ -124,9 +121,7 @@ public class GameController {
     public void moveDown() {
         if (this.uiState == UIState.IN_GAME) {
             switch (this.movementManager.tryMove(Direction.DOWN)) {
-                case PASS -> {
-                    this.move();
-                }
+                case PASS -> this.move();
                 case PUSHED -> {
                     this.gameState.addPush();
                     this.move();
@@ -138,9 +133,7 @@ public class GameController {
     public void moveLeft() {
         if (this.uiState == UIState.IN_GAME) {
             switch (this.movementManager.tryMove(Direction.LEFT)) {
-                case PASS -> {
-                    this.move();
-                }
+                case PASS -> this.move();
                 case PUSHED -> {
                     this.gameState.addPush();
                     this.move();
@@ -152,13 +145,13 @@ public class GameController {
     public void moveRight() {
         if (this.uiState == UIState.IN_GAME) {
             switch (this.movementManager.tryMove(Direction.RIGHT)) {
-                case PASS -> {
-                    this.move();
-                }
+                case PASS -> this.move();
                 case PUSHED -> {
                     this.gameState.addPush();
                     this.move();
                 }
+                case BLOCKED -> { }
+                default -> throw new IllegalStateException();
             }
         }
     }
