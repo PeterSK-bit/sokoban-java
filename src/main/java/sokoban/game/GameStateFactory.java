@@ -9,8 +9,19 @@ import sokoban.movement.GameState;
 import sokoban.persistence.save.GameSave;
 import sokoban.persistence.save.GameStateSave;
 
+/**
+ * Factory responsible for creating {@link GameState} instances
+ * from different sources (level definition or saved game).
+ */
 public class GameStateFactory {
-    // for reset functionality
+
+    /**
+     * Creates a fresh game state from a level definition.
+     * Used mainly for starting a new level or resetting progress.
+     *
+     * @param level source level definition
+     * @return initialized game state
+     */
     public static GameState fromLevel(Level level) {
         MoveableObject[][] grid = new MoveableObject[level.getHeight()][level.getWidth()];
 
@@ -22,6 +33,12 @@ public class GameStateFactory {
                 new Player(level.getPlayerStart()), grid, 0, 0, 0);
     }
 
+    /**
+     * Reconstructs a game state from a persisted save.
+     *
+     * @param gameSave saved game data
+     * @return restored game state
+     */
     public static GameState fromSave(GameSave gameSave) {
         Level level = gameSave.level();
         GameStateSave gameStateSave = gameSave.state();

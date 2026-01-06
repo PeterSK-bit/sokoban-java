@@ -7,6 +7,9 @@ import sokoban.model.objects.Player;
 
 import sokoban.model.position.Position;
 
+/**
+ * Holds mutable runtime state of the game.
+ */
 public class GameState {
 
     private final int width;
@@ -18,6 +21,16 @@ public class GameState {
     private int pushes;
     private int timeElapsed;
 
+    /**
+     * Creates a new game state instance.
+     * @param width width of board
+     * @param height height of board
+     * @param player player object
+     * @param moveableObjects moveable objects except player
+     * @param moves move made in game
+     * @param pushes pushes made in game
+     * @param timeElapsed time elapsed from game start in seconds
+     */
     public GameState(
             int width, int height, Player player, MoveableObject[][] moveableObjects, int moves, int pushes, int timeElapsed
     ) {
@@ -70,11 +83,20 @@ public class GameState {
         this.timeElapsed = timeElapsed;
     }
 
+    /**
+     * Returns a movable object at the given position.
+     *
+     * @param position queried position
+     * @return movable object or null
+     */
     public MoveableObject getMoveableObjectAt(Position position) {
         MoveableObject object = this.moveableObjects[position.getY()][position.getX()];
         return (object == null ? null : object.copy());
     }
 
+    /**
+     * @return deep copy of movable objects grid
+     */
     public MoveableObject[][] getMoveableObjects() {
         MoveableObject[][] copy = new MoveableObject[this.moveableObjects.length][];
 
@@ -89,6 +111,12 @@ public class GameState {
         return copy;
     }
 
+    /**
+     * Moves a movable object in a given direction.
+     *
+     * @param position source position
+     * @param direction movement direction
+     */
     public void moveObject(Position position, Direction direction) {
         Position newPosition = position.translate(direction);
 
@@ -118,18 +146,32 @@ public class GameState {
         this.moveableObjects[newPosition.getY()][newPosition.getX()] = obj;
     }
 
+    /**
+     * @return current player position
+     */
     public Position getPlayerPosition() {
         return this.player.getPosition();
     }
 
+    /**
+     * @return board width
+     */
     public int getWidth() {
         return this.width;
     }
 
+    /**
+     * @return board height
+     */
     public int getHeight() {
         return this.height;
     }
 
+    /**
+     * Updates player position.
+     *
+     * @param newPosition new position
+     */
     public void setPlayerPosition(Position newPosition) {
         if (newPosition == null) {
             throw new IllegalArgumentException("Position can not be null");
@@ -138,26 +180,45 @@ public class GameState {
         this.player.setPosition(newPosition);
     }
 
+    /**
+     * @return moves made
+     */
     public int getMoves() {
         return this.moves;
     }
 
+    /**
+     * adds one move to moves made already
+     */
     public void addMove() {
         this.moves += 1;
     }
 
-    public int getPushes() {
-        return this.pushes;
-    }
-
+    /**
+     * adds one push to pushes made already
+     */
     public void addPush() {
         this.pushes += 1;
     }
 
+    /**
+     * @return pushes made
+     */
+    public int getPushes() {
+        return this.pushes;
+    }
+
+    /**
+     * @return times elapsed
+     */
     public int getTimeElapsed() {
         return this.timeElapsed;
     }
 
+    /**
+     * sets time elapsed in seconds
+     * @param timeElapsed
+     */
     public void setTimeElapsed(int timeElapsed) {
         this.timeElapsed = timeElapsed;
     }

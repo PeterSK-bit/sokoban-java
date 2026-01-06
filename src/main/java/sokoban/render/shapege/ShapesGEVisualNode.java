@@ -2,6 +2,10 @@ package sokoban.render.shapege;
 
 import sokoban.render.api.IVisualNode;
 
+/**
+ * Wrapper for a ShapesGE object implementing IVisualNode.
+ * Provides show/hide functionality through VisualWrapper.
+ */
 public class ShapesGEVisualNode implements IVisualNode {
 
     private final Object shape;
@@ -12,11 +16,17 @@ public class ShapesGEVisualNode implements IVisualNode {
         this.visibility = new VisualWrapper(shape);
     }
 
+    /**
+     * Makes the node visible.
+     */
     @Override
     public void show() {
         this.visibility.makeVisible();
     }
 
+    /**
+     * Hides the node.
+     */
     @Override
     public void hide() {
         this.visibility.makeInvisible();

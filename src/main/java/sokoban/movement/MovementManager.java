@@ -6,12 +6,19 @@ import sokoban.model.objects.Box;
 import sokoban.model.objects.MoveableObject;
 import sokoban.model.objects.Wall;
 import sokoban.model.position.Position;
-import sokoban.render.enums.RenderType;
 
+/**
+ * Handles movement rules and win condition evaluation.
+ */
 public class MovementManager {
     private final GameState gameState;
     private final Level level;
 
+    /**
+     * Creates a movement manager bound to a level and game state.
+     * @param level
+     * @param gameState
+     */
     public MovementManager(Level level, GameState gameState) {
         if (level == null) {
             throw new IllegalArgumentException("level can not be null");
@@ -25,6 +32,12 @@ public class MovementManager {
         this.gameState = gameState;
     }
 
+    /**
+     * Attempts to move the player in the given direction.
+     *
+     * @param direction movement direction
+     * @return result of the move attempt
+     */
     public MoveResult tryMove(Direction direction) {
         Position playerPosition = this.gameState.getPlayerPosition();
         int newX = playerPosition.getX() + direction.dx();
@@ -70,14 +83,18 @@ public class MovementManager {
     private void movePlayer(Direction direction) {
         Position oldPosition = this.gameState.getPlayerPosition();
 
-        //this.gameState.moveObject(oldPosition, direction);
         this.gameState.setPlayerPosition(oldPosition.translate(direction));
     }
 
+    /**
+     * Checks whether all goals are satisfied.
+     *
+     * @return true if level is completed
+     */
     public boolean checkWin() {
         for (Position goal : this.level.getGoalPositions()) {
             MoveableObject object = this.gameState.getMoveableObjectAt(goal);
-            if (object == null || object.getRenderType() != RenderType.BOX) {
+            if (!(object instanceof Box)) {
                 return false;
             }
         }

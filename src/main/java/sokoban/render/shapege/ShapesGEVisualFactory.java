@@ -16,7 +16,18 @@ import sokoban.util.UIConstants;
 
 import java.util.List;
 
+/**
+ * Implementation of IVisualNodeFactory using ShapesGE library.
+ * Converts game objects and UI elements into visual nodes.
+ */
 public class ShapesGEVisualFactory implements IVisualNodeFactory {
+    /**
+     * Creates visual nodes for a given game object type at a specific position.
+     *
+     * @param type type of the game object
+     * @param position position of the object
+     * @return list of visual nodes
+     */
     @Override
     public List<IVisualNode> createGameVisual(RenderType type, Position position) {
         return switch (type) {
@@ -111,6 +122,12 @@ public class ShapesGEVisualFactory implements IVisualNodeFactory {
         );
     }
 
+    /**
+     * Creates visual nodes for a given UI element.
+     *
+     * @param element UI element
+     * @return list of visual nodes representing the element
+     */
     @Override
     public List<IVisualNode> createUIElementVisual(UIElement element) {
         if (element == null) {
