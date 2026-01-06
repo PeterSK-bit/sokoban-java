@@ -180,7 +180,7 @@ public class ShapesGEVisualFactory implements IVisualNodeFactory {
         int y = position.getY();
 
         Rectangle bg = new Rectangle(x, y);
-        bg.changeSize(600, 600);
+        bg.changeSize(background.getWidth(), background.getHeight());
         bg.changeColor(background.getColor());
 
         return List.of(new ShapesGEVisualNode(bg));

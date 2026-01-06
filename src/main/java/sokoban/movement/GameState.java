@@ -150,6 +150,10 @@ public class GameState {
         return this.pushes;
     }
 
+    public void addPush() {
+        this.pushes += 1;
+    }
+
     public int getTimeElapsed() {
         return this.timeElapsed;
     }

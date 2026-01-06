@@ -95,29 +95,75 @@ public class GameController {
 
     public void moveUp() {
         if (this.uiState == UIState.IN_GAME) {
-            this.movementManager.tryMove(Direction.UP);
-            this.renderBoard();
+            switch (this.movementManager.tryMove(Direction.UP)) {
+                case PASS -> {
+                    this.move();
+                }
+                case PUSHED -> {
+                    this.gameState.addPush();
+                    this.move();
+                }
+            }
         }
     }
 
     public void moveDown() {
         if (this.uiState == UIState.IN_GAME) {
-            this.movementManager.tryMove(Direction.DOWN);
-            this.renderBoard();
+            switch (this.movementManager.tryMove(Direction.DOWN)) {
+                case PASS -> {
+                    this.move();
+                }
+                case PUSHED -> {
+                    this.gameState.addPush();
+                    this.move();
+                }
+            }
         }
     }
 
     public void moveLeft() {
         if (this.uiState == UIState.IN_GAME) {
-            this.movementManager.tryMove(Direction.LEFT);
-            this.renderBoard();
+            switch (this.movementManager.tryMove(Direction.LEFT)) {
+                case PASS -> {
+                    this.move();
+                }
+                case PUSHED -> {
+                    this.gameState.addPush();
+                    this.move();
+                }
+            }
         }
     }
 
     public void moveRight() {
         if (this.uiState == UIState.IN_GAME) {
-            this.movementManager.tryMove(Direction.RIGHT);
-            this.renderBoard();
+            switch (this.movementManager.tryMove(Direction.RIGHT)) {
+                case PASS -> {
+                    this.move();
+                }
+                case PUSHED -> {
+                    this.gameState.addPush();
+                    this.move();
+                }
+            }
+        }
+    }
+
+    private void move() {
+        this.gameState.addMove();
+        this.renderBoard();
+
+        if (this.movementManager.checkWin()) {
+            this.uiState = UIState.LEVEL_COMPLETED;
+            this.renderer.remove(this.uiScene);
+            this.uiScene.clear();
+            this.uiScene.addAll(this.uiController.renderGameStats(
+                    this.currentLevel.getLevelNumber(),
+                    this.convertTimeToString(this.gameState.getTimeElapsed() + this.timer.getElapsedTime()),
+                    this.gameState.getMoves(),
+                    this.gameState.getPushes()
+            ));
+            this.renderer.render(this.uiScene);
         }
     }
 
@@ -210,4 +256,6 @@ public class GameController {
 
         return String.format("%02d:%02d", minutes, seconds);
     }
+
+
 }

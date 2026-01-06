@@ -50,8 +50,8 @@ public class UIController {
         this.activeButtons.clear();
 
         ArrayList<RenderNode> scene = new ArrayList<>();
-        int padding = 10;
-        int fontSize = 10;
+        int padding = UIConstants.DEFAULT_PADDING;
+        int fontSize = UIConstants.DEFAULT_FONT_SIZE;
         int x = 0;
 
         Label levelLabel = new Label(new Position(x, 0), true, "Level " + levelNumber);
@@ -70,6 +70,34 @@ public class UIController {
         x += (String.valueOf(moves).length() + 7) * fontSize * 0.55 + 2 * padding;
 
         Label pushesLabel = new Label(new Position(x, 0), true, "Pushes: " + pushes);
+        scene.add(this.renderFactory.createForUIElement(pushesLabel));
+
+        return scene;
+    }
+
+    public List<RenderNode> renderGameStats(int levelNumber, String time, int moves, int pushes) {
+        ArrayList<RenderNode> scene = new ArrayList<>();
+
+        Background bg = new Background(
+                new Position(150, 150), true, "white", 300, 300
+        );
+        scene.add(this.renderFactory.createForUIElement(bg));
+
+        Label levelStatsLabel = new Label(new Position(255, 200), true, "Level Stats");
+        scene.add(this.renderFactory.createForUIElement(levelStatsLabel));
+
+        Label levelNumberLabel = new Label(new Position(270, 225), true, "Level " + levelNumber);
+        scene.add(this.renderFactory.createForUIElement(levelNumberLabel));
+
+        Label timeLabel = new Label(new Position(270, 250), true, "Time: " + time);
+        scene.add(this.renderFactory.createForUIElement(timeLabel));
+
+
+        Label movesLabel = new Label(new Position(270, 275), true, "Moves: " + moves);
+        scene.add(this.renderFactory.createForUIElement(movesLabel));
+
+
+        Label pushesLabel = new Label(new Position(270, 300), true, "Pushes: " + pushes);
         scene.add(this.renderFactory.createForUIElement(pushesLabel));
 
         return scene;
