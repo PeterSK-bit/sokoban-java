@@ -81,6 +81,8 @@ public class GameController {
             this.gameState = GameStateFactory.fromLevel(this.currentGame.level());
             this.movementManager = new MovementManager(this.currentLevel, this.gameState);
             this.renderBoard();
+            this.timer.reset();
+            this.timer.start();
         }
     }
 
