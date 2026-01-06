@@ -101,4 +101,9 @@ public class UIController {
 
         return scene;
     }
+
+    public List<RenderNode> renderPauseUI() {
+        Label pauseLabel = new Label(new Position(270, 300), true, "PAUSED");
+        return List.of(this.renderFactory.createForUIElement(pauseLabel));
+    }
 }

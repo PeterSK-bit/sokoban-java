@@ -106,6 +106,19 @@ public class GameController {
         }
     }
 
+    public void pause() {
+        switch (this.uiState) {
+            case IN_GAME -> {
+                this.uiState = UIState.PAUSED;
+                this.timer.stop();
+            }
+            case PAUSED -> {
+                this.uiState = UIState.IN_GAME;
+                this.timer.start();
+            }
+        }
+    }
+
     public void moveUp() {
         if (this.uiState == UIState.IN_GAME) {
             switch (this.movementManager.tryMove(Direction.UP)) {
@@ -181,18 +194,24 @@ public class GameController {
     }
 
     public void tick() {
-        if (this.uiState == UIState.IN_GAME) {
-            this.renderer.remove(this.uiScene);
-            this.uiScene.clear();
+        switch (this.uiState) {
+            case IN_GAME -> {
+                this.renderer.remove(this.uiScene);
+                this.uiScene.clear();
 
-            this.uiScene.addAll(this.uiController.renderGameUI(
-                    this.currentLevel.getLevelNumber(),
-                    this.convertTimeToString(this.gameState.getTimeElapsed() + this.timer.getElapsedTime()),
-                    this.gameState.getMoves(),
-                    this.gameState.getPushes()
-            ));
+                this.uiScene.addAll(this.uiController.renderGameUI(
+                        this.currentLevel.getLevelNumber(),
+                        this.convertTimeToString(this.gameState.getTimeElapsed() + this.timer.getElapsedTime()),
+                        this.gameState.getMoves(),
+                        this.gameState.getPushes()
+                ));
 
-            this.renderer.render(this.uiScene);
+                this.renderer.render(this.uiScene);
+            }
+            case PAUSED -> {
+                this.uiScene.addAll(this.uiController.renderPauseUI());
+                this.renderer.render(this.uiScene);
+            }
         }
     }
 
