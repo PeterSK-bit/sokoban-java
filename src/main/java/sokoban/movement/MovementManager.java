@@ -62,6 +62,7 @@ public class MovementManager {
         }
 
         this.gameState.moveObject(target, direction);
+        this.movePlayer(direction);
 
         return MoveResult.PUSHED;
     }
@@ -69,7 +70,7 @@ public class MovementManager {
     private void movePlayer(Direction direction) {
         Position oldPosition = this.gameState.getPlayerPosition();
 
-        this.gameState.moveObject(oldPosition, direction);
+        //this.gameState.moveObject(oldPosition, direction);
         this.gameState.setPlayerPosition(oldPosition.translate(direction));
     }
 

@@ -14,14 +14,12 @@ public class GameStateFactory {
     public static GameState fromLevel(Level level) {
         MoveableObject[][] grid = new MoveableObject[level.getHeight()][level.getWidth()];
 
-        grid[level.getPlayerStart().getY()][level.getPlayerStart().getX()] = new Player(level.getPlayerStart());
-
         for (Position box : level.getBoxStarts()) {
             grid[box.getY()][box.getX()] = new Box(box);
         }
 
         return new GameState(level.getWidth(), level.getHeight(),
-                level.getPlayerStart(), grid, 0, 0, 0);
+                new Player(level.getPlayerStart()), grid, 0, 0, 0);
     }
 
     public static GameState fromSave(GameSave gameSave) {
@@ -35,7 +33,7 @@ public class GameStateFactory {
         return new GameState(
                 level.getWidth(),
                 level.getHeight(),
-                level.getPlayerStart(),
+                new Player(level.getPlayerStart()),
                 moveableObjects,
                 gameStateSave.moves(),
                 gameStateSave.pushes(),

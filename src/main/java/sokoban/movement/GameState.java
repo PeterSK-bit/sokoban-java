@@ -12,25 +12,25 @@ public class GameState {
     private final int width;
     private final int height;
 
-    private Position playerPosition;
+    private Player player;
     private MoveableObject[][] moveableObjects;
     private int moves;
     private int pushes;
     private int timeElapsed;
 
     public GameState(
-            int width, int height, Position playerPosition, MoveableObject[][] moveableObjects, int moves, int pushes, int timeElapsed
+            int width, int height, Player player, MoveableObject[][] moveableObjects, int moves, int pushes, int timeElapsed
     ) {
         if (width < 1 || height < 1) {
             throw new IllegalArgumentException("Metrics of level are too small");
         }
 
-        if (playerPosition == null) {
+        if (player == null) {
             throw new IllegalArgumentException("playerPosition can not be null");
         }
 
-        int x = playerPosition.getX();
-        int y = playerPosition.getY();
+        int x = player.getPosition().getX();
+        int y = player.getPosition().getY();
         if (x < 0 || x >= width || y < 0 || y >= height) {
             throw new IllegalArgumentException("playerPosition out of level bound");
         }
@@ -63,7 +63,7 @@ public class GameState {
 
         this.width = width;
         this.height = height;
-        this.playerPosition = playerPosition;
+        this.player = player;
         this.moveableObjects = moveableObjects;
         this.moves = moves;
         this.pushes = pushes;
@@ -119,7 +119,7 @@ public class GameState {
     }
 
     public Position getPlayerPosition() {
-        return this.playerPosition;
+        return this.player.getPosition();
     }
 
     public int getWidth() {
@@ -135,7 +135,7 @@ public class GameState {
             throw new IllegalArgumentException("Position can not be null");
         }
 
-        this.playerPosition = newPosition;
+        this.player.setPosition(newPosition);
     }
 
     public int getMoves() {
