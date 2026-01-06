@@ -5,6 +5,8 @@ import sokoban.render.enums.RenderType;
 
 /**
  * Abstract base class for all UI elements.
+ *
+ * @author Peter Magdík
  */
 public abstract class UIElement {
     private Position position;

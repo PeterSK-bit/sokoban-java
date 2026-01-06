@@ -4,6 +4,8 @@ import sokoban.model.position.Position;
 
 /**
  * Base class for all static (non-movable) game objects.
+ *
+ * @author Peter Magdík
  */
 public abstract class StaticObject extends GameObject {
     /**

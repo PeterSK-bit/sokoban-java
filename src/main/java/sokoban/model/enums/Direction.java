@@ -3,6 +3,8 @@ package sokoban.model.enums;
 /**
  * Represents movement directions with their corresponding
  * coordinate deltas.
+ *
+ * @author Peter Magdík
  */
 public enum  Direction {
     UP (0, -1),

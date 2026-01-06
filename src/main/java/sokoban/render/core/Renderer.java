@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * Handles rendering and removal of RenderNode scenes.
+ *
+ * @author Peter Magdík
  */
 public class Renderer {
     /**

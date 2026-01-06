@@ -7,6 +7,8 @@ import sokoban.model.enums.Direction;
 
 /**
  * Immutable 2D position within the game grid.
+ *
+ * @author Peter Magdík
  */
 public class Position {
     private final int x;

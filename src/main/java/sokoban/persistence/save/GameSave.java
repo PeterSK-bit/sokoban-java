@@ -4,6 +4,8 @@ import sokoban.model.level.Level;
 
 /**
  * Serializable representation of a complete game save.
+ *
+ * @author Peter Magdík
  */
 public record GameSave(
         int version,

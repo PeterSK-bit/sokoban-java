@@ -9,6 +9,8 @@ import sokoban.model.position.Position;
 
 /**
  * Holds mutable runtime state of the game.
+ *
+ * @author Peter Magdík
  */
 public class GameState {
 

@@ -6,6 +6,8 @@ import java.util.List;
 
 /**
  * Serializable snapshot of runtime game state.
+ *
+ * @author Peter Magdík
  */
 public record GameStateSave(
         int moves,

@@ -5,6 +5,8 @@ import sokoban.render.enums.RenderType;
 
 /**
  * Represents the player character.
+ *
+ * @author Peter Magdík
  */
 public class Player extends MoveableObject {
     public Player(Position position) {

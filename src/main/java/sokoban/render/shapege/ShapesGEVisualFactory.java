@@ -19,6 +19,8 @@ import java.util.List;
 /**
  * Implementation of IVisualNodeFactory using ShapesGE library.
  * Converts game objects and UI elements into visual nodes.
+ *
+ * @author Peter Magdík
  */
 public class ShapesGEVisualFactory implements IVisualNodeFactory {
     /**

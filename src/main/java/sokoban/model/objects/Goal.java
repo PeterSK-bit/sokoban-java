@@ -5,6 +5,8 @@ import sokoban.render.enums.RenderType;
 
 /**
  * Represents a goal tile.
+ *
+ * @author Peter Magdík
  */
 public class Goal extends StaticObject {
     public Goal(Position position) {

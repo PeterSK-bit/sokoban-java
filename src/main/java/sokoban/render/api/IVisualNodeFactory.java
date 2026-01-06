@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * Factory interface for creating visual nodes for game objects and UI elements.
+ *
+ * @author Peter Magdík
  */
 public interface IVisualNodeFactory {
     /**

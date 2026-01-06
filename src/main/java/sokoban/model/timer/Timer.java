@@ -2,6 +2,8 @@ package sokoban.model.timer;
 
 /**
  * Simple game timer supporting start, stop and reset.
+ *
+ * @author Peter Magdík
  */
 public class Timer {
     private long startTime;

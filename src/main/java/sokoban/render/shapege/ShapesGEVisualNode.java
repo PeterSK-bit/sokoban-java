@@ -5,6 +5,8 @@ import sokoban.render.api.IVisualNode;
 /**
  * Wrapper for a ShapesGE object implementing IVisualNode.
  * Provides show/hide functionality through VisualWrapper.
+ *
+ * @author Peter Magdík
  */
 public class ShapesGEVisualNode implements IVisualNode {
 

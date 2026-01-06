@@ -5,6 +5,8 @@ import sokoban.render.enums.RenderType;
 
 /**
  * Represents a movable box that can be pushed.
+ *
+ * @author Peter Magdík
  */
 public class Box extends MoveableObject {
     public Box(Position position) {

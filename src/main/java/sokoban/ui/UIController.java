@@ -12,6 +12,8 @@ import java.util.List;
 
 /**
  * Manages UI rendering for main menu, game UI, and pause screens.
+ *
+ * @author Peter Magdík
  */
 public class UIController {
     private final RenderFactory renderFactory;

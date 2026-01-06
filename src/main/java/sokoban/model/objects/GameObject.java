@@ -6,6 +6,8 @@ import sokoban.render.enums.RenderType;
 /**
  * Base class for all objects existing in the game world.
  * Provides position handling and common object behavior contracts.
+ *
+ * @author Peter Magdík
  */
 public abstract class GameObject {
     private Position position;

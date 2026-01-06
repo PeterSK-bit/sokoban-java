@@ -5,6 +5,8 @@ import sokoban.render.enums.RenderType;
 
 /**
  * Represents a walkable floor tile.
+ *
+ * @author Peter Magdík
  */
 public class Floor extends StaticObject {
     public Floor(Position position) {

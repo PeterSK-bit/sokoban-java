@@ -2,6 +2,8 @@ package sokoban.render.api;
 
 /**
  * Abstraction for a visual node in the game or UI.
+ *
+ * @author Peter Magdík
  */
 public interface IVisualNode {
     /**

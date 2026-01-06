@@ -5,6 +5,8 @@ import sokoban.render.enums.RenderType;
 
 /**
  * Represents a clickable button UI element with a label.
+ *
+ * @author Peter Magdík
  */
 public class Button extends UIElement {
     private String label;

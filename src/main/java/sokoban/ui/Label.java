@@ -5,6 +5,8 @@ import sokoban.render.enums.RenderType;
 
 /**
  * Represents a text label UI element.
+ *
+ * @author Peter Magdík
  */
 public class Label extends UIElement {
     private String text;

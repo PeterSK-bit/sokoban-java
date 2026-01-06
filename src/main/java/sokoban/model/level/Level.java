@@ -18,6 +18,8 @@ import java.util.Set;
 /**
  * Immutable representation of a Sokoban level.
  * Holds level metadata, initial positions, and static objects.
+ *
+ * @author Peter Magdík
  */
 public class Level {
     private final String name;

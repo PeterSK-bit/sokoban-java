@@ -10,6 +10,8 @@ import java.util.List;
 
 /**
  * Factory for creating RenderNode instances from game objects or UI elements.
+ *
+ * @author Peter Magdík
  */
 public class RenderFactory {
     private final IVisualNodeFactory visualFactory;

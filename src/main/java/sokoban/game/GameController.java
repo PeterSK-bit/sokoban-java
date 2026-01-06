@@ -29,8 +29,7 @@ import java.util.List;
  * Orchestrates game state, rendering, UI interaction, input handling,
  * persistence, and timing.
  *
- * This class is intentionally state-heavy and acts as the integration point
- * between otherwise separated subsystems.
+ * @author Peter Magdík
  */
 public class GameController {
     private GameSave currentGame;

@@ -12,6 +12,8 @@ import sokoban.persistence.save.GameStateSave;
 /**
  * Factory responsible for creating {@link GameState} instances
  * from different sources (level definition or saved game).
+ *
+ * @author Peter Magdík
  */
 public class GameStateFactory {
 

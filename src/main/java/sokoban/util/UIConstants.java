@@ -2,6 +2,8 @@ package sokoban.util;
 
 /**
  * Constants used for UI layout and rendering.
+ *
+ * @author Peter Magdík
  */
 public final class UIConstants {
     public static final int DEFAULT_PADDING = 10;

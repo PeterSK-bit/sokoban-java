@@ -2,6 +2,8 @@ package sokoban.persistence.save;
 
 /**
  * Runtime exception representing persistence layer failures.
+ *
+ * @author Peter Magdík
  */
 public class SaveRepositoryException extends RuntimeException {
     /**

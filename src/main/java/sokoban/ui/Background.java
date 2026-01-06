@@ -6,6 +6,8 @@ import sokoban.util.UIConstants;
 
 /**
  * Represents a rectangular background UI element.
+ *
+ * @author Peter Magdík
  */
 public class Background extends UIElement {
     private final RenderType renderType = RenderType.BACKGROUND;

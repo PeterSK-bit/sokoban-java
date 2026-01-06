@@ -5,6 +5,8 @@ import sokoban.render.enums.RenderType;
 
 /**
  * Represents an immovable blocking wall.
+ *
+ * @author Peter Magdík
  */
 public class Wall extends StaticObject {
     public Wall(Position position) {

@@ -4,6 +4,8 @@ import java.lang.reflect.Method;
 
 /**
  * A wrapper around any visual object to control its visibility via reflection.
+ *
+ * @author Peter Magdík
  */
 public class VisualWrapper {
     private final Object inner;

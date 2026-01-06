@@ -11,6 +11,8 @@ import java.util.stream.Stream;
 
 /**
  * File-system based repository for game saves.
+ *
+ * @author Peter Magdík
  */
 public class FileSystemSaveRepository {
     private static final Path SAVES_DIR = Path.of("saves");

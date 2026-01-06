@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * Represents a visual node in the scene with position, type, and underlying visuals.
+ *
+ * @author Peter Magdík
  */
 public class RenderNode {
     private final Position position;

@@ -9,6 +9,8 @@ import sokoban.model.position.Position;
 
 /**
  * Handles movement rules and win condition evaluation.
+ *
+ * @author Peter Magdík
  */
 public class MovementManager {
     private final GameState gameState;
