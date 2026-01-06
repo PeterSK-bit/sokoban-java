@@ -1,8 +1,9 @@
 package sokoban.render.core;
 
-import sokoban.model.objects.GameObject;
+import sokoban.model.position.Position;
 import sokoban.render.api.IVisualNode;
 import sokoban.render.api.IVisualNodeFactory;
+import sokoban.render.enums.RenderType;
 import sokoban.ui.UIElement;
 
 import java.util.List;
@@ -14,18 +15,10 @@ public class RenderFactory {
         this.visualFactory = visualFactory;
     }
 
-    public RenderNode createForGameObject(GameObject object) {
-        if (object == null) {
-            throw new IllegalArgumentException("GameObject can not be null");
-        }
+    public RenderNode createForGameObject(RenderType renderType, Position position) {
+        List<IVisualNode> visuals = this.visualFactory.createGameVisual(renderType, position);
 
-        List<IVisualNode> visuals =
-                this.visualFactory.createGameVisual(
-                        object.getRenderType(),
-                        object.getPosition()
-                );
-
-        return new RenderNode(object.getPosition(), visuals, object.getRenderType());
+        return new RenderNode(position, visuals, renderType);
     }
 
     public RenderNode createForUIElement(UIElement element) {

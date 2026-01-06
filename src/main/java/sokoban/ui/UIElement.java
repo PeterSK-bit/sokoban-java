@@ -1,6 +1,5 @@
 package sokoban.ui;
 
-import sokoban.model.enums.GameAction;
 import sokoban.model.position.Position;
 import sokoban.render.enums.RenderType;
 
@@ -35,7 +34,28 @@ public abstract class UIElement {
         this.visible = false;
     }
 
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getWidth() {
+        return this.width;
+    }
+
+    public int getHeight() {
+        return this.height;
+    }
+
     public boolean isClicked(Position mouseClick) {
+        if (this.height == 0 || this.width == 0) {
+            System.out.println("Cannot check click because of unset width and height");
+            return false;
+        }
+
         int x = mouseClick.getX();
         int y = mouseClick.getY();
 
@@ -54,6 +74,6 @@ public abstract class UIElement {
         this.position = newPosition;
     }
 
-    public abstract GameAction onClick();
+    public abstract void onClick();
     public abstract RenderType getRenderType();
 }

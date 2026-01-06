@@ -1,109 +1,78 @@
 package sokoban.movement;
 
 import sokoban.model.enums.Direction;
-import sokoban.model.level.Level;
 
-// because I can not use "import sokoban.model.objects.*;" :)
-import sokoban.model.objects.GameObject;
 import sokoban.model.objects.MoveableObject;
-import sokoban.model.objects.StaticObject;
-import sokoban.model.objects.Goal;
 import sokoban.model.objects.Player;
-import sokoban.model.objects.Box;
 
 import sokoban.model.position.Position;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GameState {
-    private final Level level;
-    private MoveableObject[][] moveableObjects;
-    private final List<Position> goalPositions;
-    private Position playerPosition;
+
     private final int width;
     private final int height;
 
+    private final Player player;
+    private final MoveableObject[][] moveableObjects;
+    private int moves;
+    private int pushes;
+    private int timeElapsed;
 
-    public GameState(Level level) {
-        if (level == null) {
-            throw new IllegalArgumentException("Level can not be null");
+    public GameState(
+            int width, int height, Player player, MoveableObject[][] moveableObjects, int moves, int pushes, int timeElapsed
+    ) {
+        if (width < 1 || height < 1) {
+            throw new IllegalArgumentException("Metrics of level are too small");
         }
 
-        this.level = level;
-        this.reset();
-        this.goalPositions = new ArrayList<Position>();
-        this.playerPosition = this.findPlayerPosition();
-        this.width = this.getLevel().getWidth();
-        this.height = this.getLevel().getHeight();
-
-        StaticObject[][] staticObjects = this.level.getStaticObjects();
-
-        for (int y = 0; y < this.level.getHeight(); y++) {
-            for (int x = 0; x < this.level.getWidth(); x++) {
-                if (staticObjects[y][x] instanceof Goal) {
-                    this.goalPositions.add(staticObjects[y][x].getPosition());
-                }
-            }
-        }
-    }
-
-    private Position findPlayerPosition() {
-        Position found = null;
-
-        for (MoveableObject[] line : this.getMoveableObjects()) {
-            for (MoveableObject object : line) {
-                if (object instanceof Player) {
-                    if (found != null) {
-                        throw new IllegalStateException("Multiple players found in moveableObjects grid");
-                    }
-                    found = object.getPosition();
-                }
-            }
+        if (player == null) {
+            throw new IllegalArgumentException("playerPosition can not be null");
         }
 
-        if (found == null) {
-            throw new IllegalStateException("Player not found in moveableObjects grid");
+        int x = player.getPosition().getX();
+        int y = player.getPosition().getY();
+        if (x < 0 || x >= width || y < 0 || y >= height) {
+            throw new IllegalArgumentException("playerPosition out of level bound");
         }
 
-        return found;
-    }
+        if (moveableObjects == null) {
+            throw new IllegalArgumentException("moveableObjects can not be null");
+        }
 
-    public void reset() {
-        this.moveableObjects = this.level.getInitialMoveableObjects();
-    }
+        if (moveableObjects.length != height) {
+            throw new IllegalArgumentException("Miss match of height and height of moveableObjects array");
+        }
 
-    public boolean isCompleted() {
-        for (Position pos : this.goalPositions) {
-            if (!(this.moveableObjects[pos.getY()][pos.getX()] instanceof Box)) {
-                return false;
+        for (int i = 0; i < height; i++) {
+            if (moveableObjects[i].length != width) {
+                throw new IllegalArgumentException("Miss match of width and width of moveableObjects array");
             }
         }
 
-        return true;
-    }
-
-    public GameObject getObjectAt(Position position) {
-        if (position == null) {
-            throw new IllegalArgumentException("Position can not be null");
+        if (moves < 0) {
+            throw new IllegalArgumentException("moves can not be negative");
         }
 
-        int x = position.getX();
-        int y = position.getY();
-
-        if (x < 0 || x >= this.level.getWidth() || y < 0 || y >= this.level.getHeight()) {
-            throw new IllegalArgumentException("Position out of array bounds.");
+        if (pushes < 0) {
+            throw new IllegalArgumentException("pushes can not be negative");
         }
 
-        if (this.moveableObjects[y][x] != null) {
-            return this.moveableObjects[y][x];
+        if (timeElapsed < 0) {
+            throw new IllegalArgumentException("time can not be negative");
         }
 
-        return this.level.getStaticObjectAt(position);
+        this.width = width;
+        this.height = height;
+        this.player = player;
+        this.moveableObjects = moveableObjects;
+        this.moves = moves;
+        this.pushes = pushes;
+        this.timeElapsed = timeElapsed;
     }
 
     public MoveableObject getMoveableObjectAt(Position position) {
-        return this.moveableObjects[position.getY()][position.getX()].copy();
+        MoveableObject object = this.moveableObjects[position.getY()][position.getX()];
+        return (object == null ? null : object.copy());
     }
 
     public MoveableObject[][] getMoveableObjects() {
@@ -118,10 +87,6 @@ public class GameState {
         }
 
         return copy;
-    }
-
-    public Level getLevel() {
-        return this.level;
     }
 
     public void moveObject(Position position, Direction direction) {
@@ -154,7 +119,7 @@ public class GameState {
     }
 
     public Position getPlayerPosition() {
-        return this.playerPosition;
+        return this.player.getPosition();
     }
 
     public int getWidth() {
@@ -170,6 +135,30 @@ public class GameState {
             throw new IllegalArgumentException("Position can not be null");
         }
 
-        this.playerPosition = newPosition;
+        this.player.setPosition(newPosition);
+    }
+
+    public int getMoves() {
+        return this.moves;
+    }
+
+    public void addMove() {
+        this.moves += 1;
+    }
+
+    public int getPushes() {
+        return this.pushes;
+    }
+
+    public void addPush() {
+        this.pushes += 1;
+    }
+
+    public int getTimeElapsed() {
+        return this.timeElapsed;
+    }
+
+    public void setTimeElapsed(int timeElapsed) {
+        this.timeElapsed = timeElapsed;
     }
 }
