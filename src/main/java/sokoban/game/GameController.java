@@ -98,6 +98,8 @@ public class GameController {
             this.gameState = null;
             this.currentLevel = null;
             this.currentGame = null;
+            this.timer.reset();
+
 
             List<SaveDescriptor> loadedSaves = this.fileSystemSaveRepository.listSaves();
             this.uiScene.addAll(this.uiController.renderMainMenu(loadedSaves));
