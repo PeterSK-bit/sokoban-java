@@ -10,6 +10,9 @@ import sokoban.util.UIConstants;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages UI rendering for main menu, game UI, and pause screens.
+ */
 public class UIController {
     private final RenderFactory renderFactory;
     private final GameController gameController;
@@ -20,10 +23,21 @@ public class UIController {
         this.gameController = gameController;
     }
 
+    /**
+     * Returns currently active buttons.
+     *
+     * @return list of buttons
+     */
     public List<Button> getActiveButtons() {
         return this.activeButtons;
     }
 
+    /**
+     * Renders main menu UI with buttons for available saves.
+     *
+     * @param savesFound
+     * @return scene
+     */
     public List<RenderNode> renderMainMenu(List<SaveDescriptor> savesFound) {
         this.activeButtons.clear();
 
@@ -45,6 +59,15 @@ public class UIController {
         return scene;
     }
 
+    /**
+     * Renders in-game UI showing level number, time, moves, and pushes.
+     *
+     * @param levelNumber
+     * @param time
+     * @param moves
+     * @param pushes
+     * @return scene
+     */
     public List<RenderNode> renderGameUI(int levelNumber, String time, int moves, int pushes) {
         this.activeButtons.clear();
 
@@ -74,6 +97,15 @@ public class UIController {
         return scene;
     }
 
+    /**
+     * Renders a pop-up stats panel for a completed level.
+     *
+     * @param levelNumber
+     * @param time
+     * @param moves
+     * @param pushes
+     * @return scene
+     */
     public List<RenderNode> renderGameStats(int levelNumber, String time, int moves, int pushes) {
         ArrayList<RenderNode> scene = new ArrayList<>();
 
@@ -102,6 +134,11 @@ public class UIController {
         return scene;
     }
 
+    /**
+     * Renders pause screen label.
+     *
+     * @return scene
+     */
     public List<RenderNode> renderPauseUI() {
         Label pauseLabel = new Label(new Position(270, 300), true, "PAUSED");
         return List.of(this.renderFactory.createForUIElement(pauseLabel));

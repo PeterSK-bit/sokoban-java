@@ -3,9 +3,18 @@ package sokoban.model.objects;
 import sokoban.model.position.Position;
 import sokoban.render.enums.RenderType;
 
+/**
+ * Base class for all objects existing in the game world.
+ * Provides position handling and common object behavior contracts.
+ */
 public abstract class GameObject {
     private Position position;
 
+    /**
+     * Creates a game object at a given position.
+     *
+     * @param position initial position
+     */
     public GameObject(Position position) {
         if (position == null) {
             throw new IllegalArgumentException("position can not be null");
@@ -14,10 +23,18 @@ public abstract class GameObject {
         this.position = position;
     }
 
+    /**
+     * @return current object position
+     */
     public Position getPosition() {
         return this.position;
     }
 
+    /**
+     * Updates object position.
+     *
+     * @param position new position
+     */
     public void setPosition(Position position) {
         if (position == null) {
             throw new IllegalArgumentException("Position can not be null");
@@ -26,9 +43,9 @@ public abstract class GameObject {
         this.position = position;
     }
 
-    public abstract boolean isBlocking();
-    public abstract boolean isPushable();
-    public abstract boolean isMoveable();
+    /**
+     * @return render type used for visualization
+     */
     public abstract RenderType getRenderType();
 
     @Override

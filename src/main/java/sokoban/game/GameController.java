@@ -24,6 +24,14 @@ import sokoban.ui.enums.UIState;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Central application controller.
+ * Orchestrates game state, rendering, UI interaction, input handling,
+ * persistence, and timing.
+ *
+ * This class is intentionally state-heavy and acts as the integration point
+ * between otherwise separated subsystems.
+ */
 public class GameController {
     private GameSave currentGame;
     private Level currentLevel;
@@ -37,6 +45,10 @@ public class GameController {
     private final UIController uiController;
     private final Timer timer;
 
+    /**
+     * Initializes the game controller, renderer, UI,
+     * registers input handling and renders the main menu.
+     */
     public GameController() {
         this.renderer = new Renderer();
         this.renderFactory = new RenderFactory(new ShapesGEVisualFactory());
@@ -51,6 +63,13 @@ public class GameController {
         this.renderer.render(this.uiScene);
     }
 
+    /**
+     * Handles left mouse click input.
+     * Used primarily for UI interaction (buttons).
+     *
+     * @param x x-coordinate of click
+     * @param y y-coordinate of click
+     */
     public void leftClick(int x, int y) {
         Position clickPosition = new Position(x, y);
 
@@ -76,6 +95,10 @@ public class GameController {
         }
     }
 
+    /**
+     * Resets the current game to its initial state
+     * and re-renders the board.
+     */
     public void resetGame() {
         if (this.currentLevel != null && this.uiState == UIState.IN_GAME) {
             this.gameState = GameStateFactory.fromLevel(this.currentGame.level());
@@ -86,6 +109,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Handles escape action.
+     * Returns the application back to the main menu
+     * and clears all runtime state.
+     */
     public void escape() {
         System.out.format("ESCAPE%n");
         if (this.uiState != UIState.MAIN_MENU) {
@@ -108,6 +136,10 @@ public class GameController {
         }
     }
 
+    /**
+     * Toggles pause state.
+     * Stops or resumes the game timer accordingly.
+     */
     public void pause() {
         switch (this.uiState) {
             case IN_GAME -> {
@@ -121,6 +153,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Attempts to move the player up.
+     */
     public void moveUp() {
         if (this.uiState == UIState.IN_GAME) {
             switch (this.movementManager.tryMove(Direction.UP)) {
@@ -133,6 +168,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Attempts to move the player down.
+     */
     public void moveDown() {
         if (this.uiState == UIState.IN_GAME) {
             switch (this.movementManager.tryMove(Direction.DOWN)) {
@@ -145,6 +183,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Attempts to move the player left.
+     */
     public void moveLeft() {
         if (this.uiState == UIState.IN_GAME) {
             switch (this.movementManager.tryMove(Direction.LEFT)) {
@@ -157,6 +198,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Attempts to move the player right.
+     */
     public void moveRight() {
         if (this.uiState == UIState.IN_GAME) {
             switch (this.movementManager.tryMove(Direction.RIGHT)) {
@@ -171,6 +215,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Applies a successful move:
+     * updates statistics, re-renders the board,
+     * and checks win condition.
+     */
     private void move() {
         this.gameState.addMove();
         this.renderBoard();
@@ -189,12 +238,21 @@ public class GameController {
         }
     }
 
+    /**
+     * Loads a saved game from persistence.
+     *
+     * @param saveDescriptor descriptor identifying the save
+     */
     public void loadSave(SaveDescriptor saveDescriptor) {
         this.currentGame = FileSystemSaveRepository.load(saveDescriptor.path());
         this.currentLevel = this.currentGame.level();
         this.gameState = GameStateFactory.fromSave(this.currentGame);
     }
 
+    /**
+     * Periodic update callback.
+     * Updates UI based on the current UI state.
+     */
     public void tick() {
         switch (this.uiState) {
             case IN_GAME -> {
@@ -217,6 +275,10 @@ public class GameController {
         }
     }
 
+    /**
+     * Renders the entire game board:
+     * static objects, movable objects, and the player.
+     */
     private void renderBoard() {
         this.renderer.remove(this.scene);
         this.scene.clear();
@@ -258,6 +320,12 @@ public class GameController {
         this.renderer.render(this.scene);
     }
 
+    /**
+     * Converts elapsed time in seconds to MM:SS format.
+     *
+     * @param timeElapsedInSeconds elapsed time in seconds
+     * @return formatted time string
+     */
     private String convertTimeToString(int timeElapsedInSeconds) {
         int minutes = timeElapsedInSeconds / 60;
         int seconds = timeElapsedInSeconds % 60;

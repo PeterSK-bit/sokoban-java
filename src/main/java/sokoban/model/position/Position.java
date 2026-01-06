@@ -5,10 +5,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import sokoban.model.enums.Direction;
 
+/**
+ * Immutable 2D position within the game grid.
+ */
 public class Position {
     private final int x;
     private final int y;
 
+    /**
+     * Creates a position with given coordinates.
+     * @param x
+     * @param y
+     */
     @JsonCreator
     public Position(
             @JsonProperty("x") int x,
@@ -18,14 +26,26 @@ public class Position {
         this.y = y;
     }
 
+    /**
+     * @return x-coordinate
+     */
     public int getX() {
         return this.x;
     }
 
+    /**
+     * @return y-coordinate
+     */
     public int getY() {
         return this.y;
     }
 
+    /**
+     * Creates a new position translated by the given direction.
+     *
+     * @param direction movement direction
+     * @return translated position
+     */
     public Position translate(Direction direction) {
         return new Position(this.x + direction.dx(), this.y + direction.dy());
     }

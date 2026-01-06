@@ -15,6 +15,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Immutable representation of a Sokoban level.
+ * Holds level metadata, initial positions, and static objects.
+ */
 public class Level {
     private final String name;
     private final int id;
@@ -27,6 +31,10 @@ public class Level {
     private final List<Position> wallPositions;
     private final StaticObject[][] staticObjects;
 
+    /**
+     * Creates a level instance from serialized data.
+     * Performs validation and static grid construction.
+     */
     @JsonCreator
     public Level(
             @JsonProperty("name") String name,
@@ -81,6 +89,13 @@ public class Level {
         this.staticObjects = this.constructStaticObjects(this.goalPositions, this.wallPositions);
     }
 
+    /**
+     * Builds the static object grid (walls, goals, floor).
+     *
+     * @param goalPositions positions of goals
+     * @param wallPositions positions of walls
+     * @return populated static object grid
+     */
     private StaticObject[][] constructStaticObjects(List<Position> goalPositions, List<Position> wallPositions) {
         StaticObject[][] grid = new StaticObject[this.height][this.width];
 
@@ -103,6 +118,9 @@ public class Level {
         return grid;
     }
 
+    /**
+     * Validates logical consistency of the level definition.
+     */
     private void validateLevelState() {
         Set<Position> walls = new HashSet<>(this.wallPositions);
         Set<Position> boxes = new HashSet<>(this.boxStarts);
@@ -153,6 +171,11 @@ public class Level {
         }
     }
 
+    /**
+     * Ensures that a position lies within level bounds.
+     *
+     * @param position position to validate
+     */
     private void ensureWithinBounds(Position position) {
         int x = position.getX();
         int y = position.getY();
@@ -162,26 +185,47 @@ public class Level {
         }
     }
 
+    /**
+     * @return level name
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * @return unique level identifier
+     */
     public int getId() {
         return this.id;
     }
 
+    /**
+     * @return sequential level number
+     */
     public int getLevelNumber() {
         return this.levelNumber;
     }
 
+    /**
+     * @return level width
+     */
     public int getWidth() {
         return this.width;
     }
 
+    /**
+     * @return level height
+     */
     public int getHeight() {
         return this.height;
     }
 
+    /**
+     * Returns the static object at a given position.
+     *
+     * @param position queried position
+     * @return static object at position
+     */
     public StaticObject getStaticObjectAt(Position position) {
         if (position == null) {
             throw new IllegalArgumentException("Position can not be null");
@@ -192,6 +236,11 @@ public class Level {
         return this.staticObjects[position.getY()][position.getX()];
     }
 
+    /**
+     * Returns a defensive copy of static object grid.
+     *
+     * @return static objects grid
+     */
     public StaticObject[][] getStaticObjects() {
         StaticObject[][] copy = new StaticObject[this.staticObjects.length][];
 
@@ -202,14 +251,23 @@ public class Level {
         return copy;
     }
 
+    /**
+     * @return starting position of the player
+     */
     public Position getPlayerStart() {
         return this.playerStart;
     }
 
+    /**
+     * @return initial box positions
+     */
     public List<Position> getBoxStarts() {
         return this.boxStarts;
     }
 
+    /**
+     * @return goal positions
+     */
     public List<Position> getGoalPositions() {
         return this.goalPositions;
     }

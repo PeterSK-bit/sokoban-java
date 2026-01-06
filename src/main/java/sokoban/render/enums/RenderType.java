@@ -1,5 +1,8 @@
 package sokoban.render.enums;
 
+/**
+ * Enum representing types of renderable objects in the game or UI.
+ */
 public enum RenderType {
     PLAYER,
     BOX,
